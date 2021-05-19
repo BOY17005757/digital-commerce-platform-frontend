@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet";
 
 import ErrorAlert from "./erroralert.component";
 
+import {Redirect} from 'react-router-dom';
+
 //import service
 import AuthenticationService from '../services/authentication.service';
 
@@ -25,10 +27,11 @@ export default class SignIn extends Component {
     this.state = {
 
       username: '',
+      emailAddress: '',
       password: '',
       loading: false,
       showInvalidCredMessage: false,
-      showErrorMessage: false,
+      showErrorAlert: false,
       message: '',
       currentUser: AuthenticationService.getCurrentUser(),
       redirect: null
@@ -53,6 +56,17 @@ export default class SignIn extends Component {
 
   }
 
+  //handle form entry
+  handleChange(event) {
+
+    this.setState({
+
+      [event.target.id]: event.target.value
+
+    });
+
+  }
+
   //form submit on login
   onSubmit(event) {
 
@@ -68,13 +82,14 @@ export default class SignIn extends Component {
 
     });
 
-    AuthenticationService.login(this.state.username, this.state.password)
+    AuthenticationService.signIn(this.state.emailAddress, this.state.password)
       .then(function (user) {
 
-        if (!user.username) {
+        if (!user.emailAddress) {
 
           self.setState({
 
+            showErrorAlert: true,
             showInvalidCredMessage: true,
             message: user.data.message
 
@@ -84,8 +99,8 @@ export default class SignIn extends Component {
 
           self.setState({
 
-            showErrorMessage: false,
-            showInvalidCredMessage: false,
+            showErrorAlert: false,
+            // showInvalidCredMessage: false,
             redirect: '/'
 
           });
@@ -101,7 +116,7 @@ export default class SignIn extends Component {
 
         self.setState({
 
-          showErrorMessage: true
+          showErrorAlert: true
 
         });
 
@@ -121,6 +136,13 @@ export default class SignIn extends Component {
   //render login component
   render() {
 
+    //handle redirect url
+    if(this.state.redirect) {
+
+      return <Redirect to={this.state.redirect} />;
+
+    }
+
     return (
       <div>
       <Helmet>
@@ -139,21 +161,26 @@ export default class SignIn extends Component {
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+
+          {/* <form className="mt-8 space-y-6" action="#" method="POST"> */}
+          <form onSubmit={this.onSubmit.bind(this)} className="mt-8 space-y-6">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label htmlFor="email-address" className="sr-only">
+                <label htmlFor="emailAddress" className="sr-only">
                   Email address
                 </label>
                 <input
-                  id="email-address"
+                  id="emailAddress"
                   name="email"
                   type="email"
                   autoComplete="email"
                   required
                   className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
                   placeholder="Email address"
+                  value={this.state.emailAddress}
+                  onChange={this.handleChange.bind(this)}
+                  autoFocus
                 />
               </div>
               <div>
@@ -168,25 +195,19 @@ export default class SignIn extends Component {
                   required
                   className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.handleChange.bind(this)}
                 />
               </div>
             </div>
 
-            <ErrorAlert/>
+            {this.state.showErrorAlert && (
+
+              <ErrorAlert message={this.state.message} />
+
+            )}
 
             <div className="flex items-center justify-between">
-              {/* <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  name="remember_me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div> */}
-
               <div className="text-sm">
                 <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Don't have an account? Click here
@@ -208,7 +229,6 @@ export default class SignIn extends Component {
           </form>
         </div>
         </div>
-        {/* </section> */}
       </div>
       </div>
     );
