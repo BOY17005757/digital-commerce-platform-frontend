@@ -14,7 +14,7 @@ export default class ShoppingCart extends Component {
     return (
         <div>
             <Helmet>
-                <title>Social-Link | Shopping Cart</title>
+                <title>Digital-Commerce | Shopping Cart</title>
             </Helmet>
             <div className="relative bg-gray-200 overflow-hidden">
             <div class="flex justify-center my-6">

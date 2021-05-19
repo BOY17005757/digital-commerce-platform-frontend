@@ -14,7 +14,7 @@ export default class Login extends Component {
     return (
         <div>
         <Helmet>
-            <title>Social-Link | Contact</title>
+            <title>Digital-Commerce | Contact</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden">
 

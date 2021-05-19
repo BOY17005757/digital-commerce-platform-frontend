@@ -14,7 +14,7 @@ export default class About extends Component {
     return (
         <div>
         <Helmet>
-            <title>Social-Link | About</title>
+            <title>Digital-Commerce | About</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden">
             <section className="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex lg:justify-center">

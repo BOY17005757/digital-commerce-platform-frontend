@@ -17,7 +17,7 @@ export default class Home extends Component {
         <div>
             {/* <p>Home</p> */}   
       <Helmet>
-        <title>Social-Link | Home</title>
+        <title>Digital-Commerce | Home</title>
       </Helmet>
       <div className="relative bg-gray-200 overflow-hidden min-h-screen">
       <div className="max-w-7xl mx-auto">

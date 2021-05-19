@@ -15,7 +15,7 @@ export default class Product extends Component {
 
     return (<div>
         <Helmet>
-            <title>Social-Link | Products</title>
+            <title>Digital-Commerce | Products</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden min-h-screen">
 

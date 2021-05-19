@@ -124,7 +124,7 @@ export default class SignIn extends Component {
     return (
       <div>
       <Helmet>
-            <title>Social-Link | Sign in to your Account</title>
+            <title>Digital-Commerce | Sign in to your Account</title>
       </Helmet>
       <div className="min-h-screen flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
         
