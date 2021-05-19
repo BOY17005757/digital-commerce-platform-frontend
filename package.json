@@ -1,0 +1,67 @@
+{
+  "name": "digital-commerce-platform-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@headlessui/react": "^1.2.0",
+    "@heroicons/react": "^1.0.1",
+    "@tailwindcss/forms": "^0.3.2",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.6.3",
+    "axios": "^0.21.1",
+    "moment": "^2.29.1",
+    "node-fetch": "^2.6.1",
+    "query-string": "^6.13.8",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.3",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "react-jwt": "^1.1.2",
+    "react-router-bootstrap": "^0.25.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.1",
+    "serve": "^11.3.2",
+    "web-vitals": "^0.2.4",
+    "workbox-core": "^6.1.0",
+    "workbox-expiration": "^6.1.0",
+    "workbox-precaching": "^6.1.0",
+    "workbox-routing": "^6.1.0",
+    "workbox-strategies": "^6.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "serve -s build",
+    "css": "postcss ./src/styles/tailwind.css -o ./src/styles/tailwind.generated.css",
+    "prestart": "npm run css",
+    "prebuild": "npm run css"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.15",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.1.2"
+  }
+}
