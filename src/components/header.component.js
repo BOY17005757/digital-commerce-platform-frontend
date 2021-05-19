@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import "../styles/tailwind.generated.css";
 
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
@@ -22,7 +22,13 @@ import {
   XIcon,
   ShoppingCartIcon
 } from '@heroicons/react/outline'
+
 import { ChevronDownIcon } from '@heroicons/react/solid'
+
+import Moment from 'moment';
+
+//import services
+import AuthenticationService from "../services/authentication.service";
 
 const products = [
     {
@@ -97,8 +103,54 @@ function classNames(...classes) {
 //define login class
 export default class Header extends Component {
 
+  //topnavbar constructor
+  constructor(props) {
+
+    //allow access to props within constructor
+    super(props);
+
+    //assign default state
+    this.state = {
+
+        currentDate: new Date(),
+        timestamp: Moment(new Date()).format("HH:mm:ssa"),
+        redirect: null
+
+    };
+
+    //bind listeners to functions
+    // this.tick = this.tick.bind(this);
+    this.signOut = this.signOut.bind(this);
+
+}
+
+  signOut() {
+
+    //logout user
+    AuthenticationService.signOut();
+
+    this.setState({
+
+        redirect: '/login'
+
+    }, function () {
+
+        //prop callback to update navbar
+        // this.props.navCallBack();
+
+    });
+
+  }
+
   //render login component
   render() {
+
+    //handle redirect url
+    if(this.state.redirect) {
+
+      return <Redirect to={this.state.redirect} />;
+
+  }
 
     return (
     <Popover className="relative bg-gray-800">
@@ -196,8 +248,11 @@ export default class Header extends Component {
                 >
                   Sign up
                 </Link>
+                <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                  Sign out
+                </button>
                 <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center">
-                    <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600 ml-8" aria-hidden="true" />
+                    <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600" aria-hidden="true" />
                     <span className="ml-2 text-base font-medium text-white hover:text-gray-400">Shopping Cart</span>
                 </Link>
               </div>

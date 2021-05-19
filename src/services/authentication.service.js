@@ -11,10 +11,10 @@ const API_URL = "http://localhost:8080/api/authentication/";
 //define authentication service class
 class AuthenticationService {
 
-    //api call (POST) signin, pass username/password via body
-    signIn(username, password) {
+    //api call (POST) signin, pass emailAddress/password via body
+    signIn(emailAddress, password) {
         return axios.post(API_URL + "signin", {
-                username,
+                emailAddress,
                 password
             })
             .then(function (response) {
@@ -39,7 +39,7 @@ class AuthenticationService {
     }
 
     //remove user from browser local storage
-    logout() {
+    signOut() {
 
         localStorage.removeItem("user");
 
