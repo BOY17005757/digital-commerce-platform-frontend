@@ -60,7 +60,7 @@ export default class Body extends Component {
             if (isExpired(this.state.currentUser.accessToken)) {
 
                   //logout user
-                  AuthenticationService.logout();
+                  AuthenticationService.signOut();
 
             }
 
@@ -92,7 +92,7 @@ export default class Body extends Component {
         <Router history={history}>
           {/* <NavBar history={history}/> */}
           <Header history={history}/>
-          {/* <div class="flex flex-col h-screen justify-between"> */}
+          {/* <div className="flex flex-col h-screen justify-between"> */}
           <Switch>
             <Route exact path="/"
                   component={Home} />
