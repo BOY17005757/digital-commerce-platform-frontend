@@ -30,7 +30,6 @@ export default class SignIn extends Component {
       emailAddress: '',
       password: '',
       loading: false,
-      showInvalidCredMessage: false,
       showErrorAlert: false,
       message: '',
       currentUser: AuthenticationService.getCurrentUser(),
@@ -90,7 +89,6 @@ export default class SignIn extends Component {
           self.setState({
 
             showErrorAlert: true,
-            showInvalidCredMessage: true,
             message: user.data.message
 
           });
@@ -100,7 +98,6 @@ export default class SignIn extends Component {
           self.setState({
 
             showErrorAlert: false,
-            // showInvalidCredMessage: false,
             redirect: '/'
 
           });

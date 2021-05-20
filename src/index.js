@@ -32,72 +32,157 @@ export default class Body extends Component {
       //body constructor
       constructor(props) {
 
-      //allow access to props within constructor
-      super(props);
+            //allow access to props within constructor
+            super(props);
 
-      //assign default state
-      this.state = {
+            //assign default state
+            this.state = {
 
-            currentUser: AuthenticationService.getCurrentUser(),
-            username: '',
-            userid: '',
-            displayTitle: '',
-            adminUser: false,
-            showNoInternetErrorMessage: false
+                  currentUser: AuthenticationService.getCurrentUser(),
+                  username: '',
+                  userid: '',
+                  displayTitle: '',
+                  adminUser: false,
+                  showNoInternetErrorMessage: false
 
-      };
+            };
 
-      //bind listeners to functions
-      // this.handleUser = this.handleUser.bind(this);
-      // this.loginCallBack = this.loginCallBack.bind(this);
-      // this.navCallback = this.navCallback.bind(this);
-      this.handleTitleChange = this.handleTitleChange.bind(this);
+            //bind listeners to functions
+            this.handleUser = this.handleUser.bind(this);
+            this.loginCallBack = this.loginCallBack.bind(this);
+            this.navCallback = this.navCallback.bind(this);
+            this.handleTitleChange = this.handleTitleChange.bind(this);
 
-      //validate user logged in
-      if (this.state.currentUser != null) {
+            //validate user logged in
+            if (this.state.currentUser != null) {
 
-            //check if JWT is expired
-            if (isExpired(this.state.currentUser.accessToken)) {
+                  //check if JWT is expired
+                  if (isExpired(this.state.currentUser.accessToken)) {
 
-                  //logout user
-                  AuthenticationService.signOut();
+                        //logout user
+                        AuthenticationService.signOut();
+
+                  }
 
             }
 
       }
 
+      //invoked after component is mounted
+      componentDidMount() {
+
+            //call handle user function
+            this.handleUser();
+
       }
 
-  //update display title on page change via helmet
-  handleTitleChange(newState) {
+      //update display title on page change via helmet
+      handleTitleChange(newState) {
 
-      //check if title has changed
-      if (newState.title !== this.state.displayTitle) {
+            //check if title has changed
+            if (newState.title !== this.state.displayTitle) {
 
-            this.setState({
+                  this.setState({
 
-                  displayTitle: newState.title
+                        displayTitle: newState.title
+
+                  });
+            }
+
+      }
+
+      //get current user and check if administrator
+      handleUser() {
+
+            //call check online function
+            // this.checkOnline();
+
+            var self = this;
+
+            self.setState({
+
+                  currentUser: AuthenticationService.getCurrentUser()
+
+            }, function () {
+
+                  if (self.state.currentUser) {
+
+                        self.setState({
+
+                              username: self.state.currentUser.username,
+                              userid: self.state.currentUser.id
+
+                        });
+
+                        //     UserService.getAdmin()
+                        //       .then(function (admin) {
+
+                        //         if (admin.status === 200) {
+
+                        //           self.setState({
+
+                        //             adminUser: true
+
+                        //           });
+
+                        //         }
+
+                        //       })
+                        //       .catch(function (error) {
+
+                        //         console.error(error);
+
+                        //       })
+
+                  } else {
+
+                        self.setState({
+
+                              username: '',
+                              userid: '',
+                              adminUser: false
+
+                        });
+
+                  }
 
             });
+
+      }
+
+      //callback from nav bar component
+      navCallback() {
+
+            //call handle user function
+            this.handleUser();
+
+      }
+
+      //callback from login component
+      loginCallBack() {
+
+            //call handle user function
+            this.handleUser();
+      
       }
   
-    }
-  
-  //render body
-  render() {
+      //render body
+      render() {
 
-    return (
+      return (
       <div>
         <Helmet onChangeClientState={this.handleTitleChange}/>
         <Router history={history}>
           {/* <NavBar history={history}/> */}
-          <Header history={history}/>
+          <Header key={this.state.userid} history={history} user={ this.state.username } userid={ this.state.userid } navCallBack={this.navCallback} />
           {/* <div className="flex flex-col h-screen justify-between"> */}
           <Switch>
             <Route exact path="/"
                   component={Home} />
             <Route exact path="/signin"
-                  component={SignIn} />
+                   render={(props) => <SignIn {...props} loginCallBack={this.loginCallBack} />}
+                  // component={SignIn} 
+                  />
             <Route exact path="/signup"
                   component={SignUp} />
             <Route exact path="/dashboard"

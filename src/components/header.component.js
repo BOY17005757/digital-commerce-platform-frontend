@@ -131,12 +131,12 @@ export default class Header extends Component {
 
     this.setState({
 
-        redirect: '/login'
+        redirect: '/signin'
 
     }, function () {
 
         //prop callback to update navbar
-        // this.props.navCallBack();
+        this.props.navCallBack();
 
     });
 
