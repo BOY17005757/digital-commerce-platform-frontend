@@ -20,9 +20,12 @@ import Footer from "./components/footer.component";
 import ShoppingCart from "./components/shoppingcart.component";
 import About from "./components/about.component";
 import Contact from "./components/contact.component";
+import ProductDetails from "./components/productdetail.component";
+import DashboardCreateUser from "./components/dashboardcreateuser.component";
 
 //import services
 import AuthenticationService from "./services/authentication.service";
+import UserService from "./services/user.service";
 
 const history = createBrowserHistory();
 
@@ -114,25 +117,25 @@ export default class Body extends Component {
 
                         });
 
-                        //     UserService.getAdmin()
-                        //       .then(function (admin) {
+                            UserService.getAdmin()
+                              .then(function (admin) {
 
-                        //         if (admin.status === 200) {
+                                if (admin.status === 200) {
 
-                        //           self.setState({
+                                  self.setState({
 
-                        //             adminUser: true
+                                    adminUser: true
 
-                        //           });
+                                  });
 
-                        //         }
+                                }
 
-                        //       })
-                        //       .catch(function (error) {
+                              })
+                              .catch(function (error) {
 
-                        //         console.error(error);
+                                console.error(error);
 
-                        //       })
+                              })
 
                   } else {
 
@@ -174,7 +177,7 @@ export default class Body extends Component {
         <Helmet onChangeClientState={this.handleTitleChange}/>
         <Router history={history}>
           {/* <NavBar history={history}/> */}
-          <Header key={this.state.userid} history={history} user={ this.state.username } userid={ this.state.userid } navCallBack={this.navCallback} />
+          <Header key={this.state.userid} history={history} user={ this.state.username } userid={ this.state.userid } navCallBack={this.navCallback} adminUser={this.state.adminUser} />
           {/* <div className="flex flex-col h-screen justify-between"> */}
           <Switch>
             <Route exact path="/"
@@ -184,11 +187,19 @@ export default class Body extends Component {
                   // component={SignIn} 
                   />
             <Route exact path="/signup"
-                  component={SignUp} />
+                   component={SignUp} />
             <Route exact path="/dashboard"
-                  component={Dashboard} />
+                   render={(props) => <Dashboard {...props} username={this.state.username} adminUser={this.state.adminUser} />}
+                  // component={Dashboard}
+                  />
+            <Route exact path="/dashboard/create/user"
+                   render={(props) => <DashboardCreateUser {...props} username={this.state.username} adminUser={this.state.adminUser} />}
+                  //  component={DashboardCreateUser}
+                  />
             <Route exact path="/products"
                   component={Product} />
+            <Route path="/products/view"
+                  component={ProductDetails} />
             <Route exact path="/shoppingcart"
                   component={ShoppingCart} />
             <Route exact path="/about"

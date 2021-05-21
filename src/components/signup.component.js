@@ -8,11 +8,198 @@ import ErrorAlert from "./erroralert.component";
 
 import { Helmet } from "react-helmet";
 
+import { Redirect } from "react-router-dom";
+
+//import service
+import AuthenticationService from '../services/authentication.service';
+
 //define login class
 export default class SignIn extends Component {
 
+  //register constructor
+  constructor(props) {
+
+    //allow access to props within constructor
+    super(props);
+
+    //assign default state
+    this.state = {
+
+        firstName: '',
+        lastName:'',
+        emailAddress: '',
+        username: '',
+        password: '',
+        loading: false,
+        // showInvalidCredMessage: false,
+        showErrorAlert: false,
+        message: '',
+        currentUser: AuthenticationService.getCurrentUser(),
+        passwordConfirm: '',
+        redirect: null
+
+    };
+
+  }
+
+  //invoked after component is mounted
+  componentDidMount() {
+
+    //check user is logged in
+    if (this.state.currentUser) {
+
+        this.setState({
+            redirect: '/'
+        });
+
+    }
+
+  }
+
+  //handle form entry
+  handleChange(event) {
+
+      this.setState({
+
+          [event.target.id]: event.target.value
+
+      }, function() {
+
+        if(event.target.id === "passwordConfirm") {
+
+          this.passwordCheck();
+    
+        }
+
+      });
+
+      
+
+  }
+
+//validate password
+passwordCheck() {
+
+  var self = this;
+
+  if (self.state.password.length >= 10) {
+
+      if (self.state.password === self.state.passwordConfirm) {
+
+          self.setState({
+
+            showErrorAlert: false,
+            message: null
+
+          });
+
+          return true;
+
+      } else {
+
+          self.setState({
+
+              showErrorAlert: true,
+              message: "Passwords do not match.",
+              loading: false
+
+          });
+
+          return false;
+
+      }
+
+  } else {
+
+      self.setState({
+
+          showErrorAlert: true,
+          message: "Password must be more than 10 characters.",
+          loading: false
+
+      });
+
+      return false;
+
+  }
+
+}
+
+//form submit on register
+onSubmit(event) {
+
+  //prevent browser refresh after submit
+  event.preventDefault();
+
+  var self = this;
+
+  this.setState({
+
+      message: '',
+      loading: true
+
+  });
+
+  if (this.passwordCheck()) {
+
+      AuthenticationService.signUp(this.state.firstName, this.state.lastName, this.state.username, this.state.emailAddress, this.state.password)
+          .then(function (user) {
+
+              if (!user.username) {
+
+                  self.setState({
+
+                      showErrorAlert: true,
+                      message: user.data.message
+
+                  });
+
+              } else {
+
+                  self.setState({
+
+                      showErrorAlert: false,
+                      redirect: '/signin'
+
+                  });
+
+              }
+
+          })
+          .catch(function (error) {
+
+              console.error(error);
+
+              self.setState({
+
+                  showErrorAlert: true
+
+              });
+
+          })
+          .finally(function () {
+
+              self.setState({
+
+                  loading: false
+
+              });
+
+          });
+
+  }
+
+  }
+
   //render login component
   render() {
+
+    //handle redirect url
+    if(this.state.redirect) {
+
+      return <Redirect to={this.state.redirect} />;
+
+  }
 
     return (
         <div>
@@ -30,35 +217,42 @@ export default class SignIn extends Component {
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign up for an account</h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+
+          <form onSubmit={this.onSubmit.bind(this)} className="mt-8 space-y-6">
+          {/* <form className="mt-8 space-y-6" action="#" method="POST"> */}
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
             <div clasName="my-8">
-                <label htmlFor="first-name" className="sr-only">
+                <label htmlFor="firstName" className="sr-only">
                   First Name
                 </label>
                 <input
-                  id="first-name"
-                  name="first-name"
+                  id="firstName"
+                  name="firstName"
                   type="text"
                 //   autoComplete="email"
                   required
                   className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
                   placeholder="First Name"
+                  value={this.state.firstName}
+                  onChange={this.handleChange.bind(this)}
+                  autoFocus
                 />
               </div>
               <div>
-                <label htmlFor="last-name" className="sr-only">
+                <label htmlFor="lastName" className="sr-only">
                   Last Name
                 </label>
                 <input
-                  id="last-name"
-                  name="last-name"
-                  type="last-name"
+                  id="lastName"
+                  name="lastName"
+                  type="text"
                 //   autoComplete="email"
                   required
                   className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
                   placeholder="Last Name"
+                  value={this.state.lastName}
+                  onChange={this.handleChange.bind(this)}
                 />
               </div>
               <div>
@@ -66,13 +260,31 @@ export default class SignIn extends Component {
                   Email address
                 </label>
                 <input
-                  id="email-address"
-                  name="email"
+                  id="emailAddress"
+                  name="emailAddress"
                   type="email"
                   autoComplete="email"
                   required
                   className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
                   placeholder="Email address"
+                  value={this.state.emailAddress}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Username
+                </label>
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  autoComplete="email"
+                  required
+                  className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
+                  placeholder="Username"
+                  value={this.state.username}
+                  onChange={this.handleChange.bind(this)}
                 />
               </div>
               <div>
@@ -87,31 +299,39 @@ export default class SignIn extends Component {
                   required
                   className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
                   placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.handleChange.bind(this)}
+                />
+              </div>
+              <div>
+                <label htmlFor="passwordConfirm" className="sr-only">
+                  Password
+                </label>
+                <input
+                  id="passwordConfirm"
+                  name="passwordConfirm"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="appearance-none rounded-none block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm my-4"
+                  placeholder="Confirm Password"
+                  value={this.state.passwordConfirm}
+                  onChange={this.handleChange.bind(this)}
                 />
               </div>
             </div>
 
-            {/* <div className="flex items-center justify-between"> */}
-              {/* <div className="flex items-center">
-                <input
-                  id="remember_me"
-                  name="remember_me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
-                  Remember me
-                </label>
-              </div> */}
+            {this.state.showErrorAlert && (
 
-              {/* <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot your password?
-                </a>
-              </div> */}
-            {/* </div> */}
+              <ErrorAlert message={this.state.message} />
 
-            <ErrorAlert/>
+            )}
+
+        {/* <div class="relative pt-1">
+          <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-pink-200">
+            <div style="width:30%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-pink-500"></div>
+          </div>
+        </div> */}
 
             <div>
               <button

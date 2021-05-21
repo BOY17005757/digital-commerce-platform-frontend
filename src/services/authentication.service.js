@@ -46,8 +46,10 @@ class AuthenticationService {
     }
 
     ///api call (POST) signUp, pass username/emailAddress/password via body
-    signUp(username, emailAddress, password) {
+    signUp(firstName, lastName, username, emailAddress, password) {
         return axios.post(API_URL + "signup", {
+                firstName,
+                lastName,
                 username,
                 emailAddress,
                 password

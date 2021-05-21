@@ -15,7 +15,7 @@ export default class Product extends Component {
 
     return (<div>
         <Helmet>
-            <title>Digital-Commerce | Products</title>
+            <title>Digital-Commerce | Product Details</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden min-h-screen">
 
@@ -23,19 +23,12 @@ export default class Product extends Component {
             <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg className="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
-                        <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                     </svg>
                 </span>
 
-                <input type="text" class="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md" placeholder="Search"/>
+                <input type="text" className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md" placeholder="Search"/>
             </div>
-
-            {/* <div className="absolute inset-x-0 px-6 py-3 mx-5 mt-4 overflow-y-auto bg-white border border-gray-300 rounded-md max-h-72 dark:bg-gray-800 dark:border-transparent">
-                <a href="#" class="block py-1">
-                    <h3 className="font-medium text-gray-700 dark:text-gray-100 hover:underline">Software engineer</h3>
-                    <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">02/04/2020</p>
-                </a>
-            </div> */}
         </section>
 
         <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
@@ -49,9 +42,9 @@ export default class Product extends Component {
                     <p className="mt-4 font-bold text-2xl">£16.00</p>
                 </div>
                 <div className="px-6 pb-4">
-                    <Link to="/products/1" className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    <Link to="/products/view/1" className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                     >
-                    View
+                    View Product
                     </Link>
                 </div>
             </div>
@@ -65,11 +58,6 @@ export default class Product extends Component {
                     </p>
                     <p className="mt-4 font-bold">£16.00</p>
                 </div>
-                {/* <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#summer</span>
-                </div> */}
             </div>
 
             <div className="rounded overflow-hidden shadow-lg bg-white">
@@ -81,11 +69,6 @@ export default class Product extends Component {
                     </p>
                     <p className="mt-4 font-bold">£16.00</p>
                 </div>
-                {/* <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#fall</span>
-                </div> */}
             </div>
 
             <div className="rounded overflow-hidden shadow-lg bg-white">
@@ -97,11 +80,6 @@ export default class Product extends Component {
                     </p>
                     <p className="mt-4 font-bold">£16.00</p>
                 </div>
-                {/* <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#fall</span>
-                </div> */}
             </div>
 
             <div className="rounded overflow-hidden shadow-lg bg-white">
@@ -113,11 +91,6 @@ export default class Product extends Component {
                     </p>
                     v
                 </div>
-                {/* <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#fall</span>
-                </div> */}
             </div>
 
             <div className="rounded overflow-hidden shadow-lg bg-white">
@@ -129,11 +102,6 @@ export default class Product extends Component {
                     </p>
                     <p className="mt-4 font-bold">£16.00</p>
                 </div>
-                {/* <div className="px-6 pt-4 pb-2">
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
-                    <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#fall</span>
-                </div> */}
             </div>
         </div>
         </div>

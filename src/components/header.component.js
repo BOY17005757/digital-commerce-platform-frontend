@@ -8,17 +8,8 @@ import {Link, Redirect} from 'react-router-dom';
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import {
-  BookmarkAltIcon,
-  CalendarIcon,
   ChartBarIcon,
-  CursorClickIcon,
   MenuIcon,
-  PhoneIcon,
-  PlayIcon,
-  RefreshIcon,
-  ShieldCheckIcon,
-  SupportIcon,
-  ViewGridIcon,
   XIcon,
   ShoppingCartIcon
 } from '@heroicons/react/outline'
@@ -37,62 +28,7 @@ const products = [
       href: '/products',
       icon: ChartBarIcon,
     },
-    // {
-    //   name: 'Custom1',
-    //   description: 'Bibendum ut tristique et egestas quis ipsum.',
-    //   href: '#',
-    //   icon: CursorClickIcon,
-    // },
-    // {
-    //     name: 'Custom2',
-    //     description: 'Bibendum ut tristique et egestas quis ipsum.',
-    //     href: '#',
-    //     icon: CursorClickIcon,
-    //   },
-    // { name: 'Security', description: "Your customers' data will be safe and secure.", href: '#', icon: ShieldCheckIcon },
-    // {
-    //   name: 'Integrations',
-    //   description: "Connect with third-party tools that you're already using.",
-    //   href: '#',
-    //   icon: ViewGridIcon,
-    // },
-    // {
-    //   name: 'Automations',
-    //   description: 'Build strategic funnels that will drive your customers to convert',
-    //   href: '#',
-    //   icon: RefreshIcon,
-    // },
   ]
-//   const callsToAction = [
-//     { name: 'Watch Demo', href: '#', icon: PlayIcon },
-//     { name: 'Contact Sales', href: '#', icon: PhoneIcon },
-//   ]
-//   const resources = [
-//     {
-//       name: 'Help Center',
-//       description: 'Get all of your questions answered in our forums or contact support.',
-//       href: '#',
-//       icon: SupportIcon,
-//     },
-//     {
-//       name: 'Guides',
-//       description: 'Learn how to maximize our platform to get the most out of it.',
-//       href: '#',
-//       icon: BookmarkAltIcon,
-//     },
-//     {
-//       name: 'Events',
-//       description: 'See what meet-ups and other events we might be planning near you.',
-//       href: '#',
-//       icon: CalendarIcon,
-//     },
-//     { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
-//   ]
-//   const recentPosts = [
-//     { id: 1, name: 'Boost your conversion rate', href: '#' },
-//     { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-//     { id: 3, name: 'Improve your customer experience', href: '#' },
-//   ]
   
 function classNames(...classes) {
 
@@ -238,23 +174,37 @@ export default class Header extends Component {
                 </Link>
               </Popover.Group>
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-                <Link to="/dashboard" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
-                  Dashboard
-                </Link>
-                <Link to="/signin" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
-                  Sign in
-                </Link>
-                <Link to="/signup" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                >
-                  Sign up
-                </Link>
-                <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
-                  Sign out
-                </button>
-                <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center">
-                    <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600" aria-hidden="true" />
-                    <span className="ml-2 text-base font-medium text-white hover:text-gray-400">Shopping Cart</span>
-                </Link>
+
+                {this.props.adminUser && (
+
+                  <Link to="/dashboard" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                    Dashboard
+                  </Link>
+
+                )}
+
+                {!this.props.user && (
+                  <Link to="/signin" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
+                    Sign in
+                  </Link>
+                )}
+                {!this.props.user && (
+                  <Link to="/signup" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Sign up
+                  </Link>
+                )}
+                {this.props.user && (
+                  <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-4">
+                    Sign out
+                  </button>
+                )}
+                {this.props.user && (
+                  <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center">
+                      <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600 ml-8" aria-hidden="true" />
+                      <span className="ml-2 text-base font-medium text-white hover:text-gray-400">Shopping Cart</span>
+                  </Link>
+                )}
               </div>
             </div>
           </div>

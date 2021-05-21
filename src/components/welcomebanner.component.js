@@ -3,8 +3,25 @@ import React, { Component } from 'react';
 
 import "../styles/tailwind.generated.css";
 
+import Moment from 'moment';
+
 //define login class
 export default class Login extends Component {
+
+    //topnavbar constructor
+    constructor(props) {
+
+        //allow access to props within constructor
+        super(props);
+
+        //assign default state
+        this.state = {
+
+            currentDate: new Date(),
+
+        };
+
+    }
 
   //render login component
   render() {
@@ -54,7 +71,7 @@ export default class Login extends Component {
         </div>
 
         <div className="relative">
-        <h1 className="text-2xl md:text-3xl text-gray-800 font-bold mb-1">Good afternoon, Conor. 👋</h1>
+        <h1 className="text-2xl md:text-3xl text-gray-800 font-bold mb-1">{Moment(this.state.currentDate).hour() < 12 ? 'Good morning' : 'Good afternoon' }, {this.props.username}. 👋</h1>
         <p>This administrator dashboard allows you to make changes to your site.</p>
         </div>
 
