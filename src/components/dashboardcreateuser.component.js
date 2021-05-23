@@ -46,15 +46,15 @@ export default class Login extends Component {
   //invoked after component is mounted
   componentDidMount() {
 
-    if(!this.props.adminUser) {
+    // if(!this.props.adminUser) {
 
-      this.setState({
+    //   this.setState({
 
-        redirect: '/'
+    //     redirect: '/'
 
-      });
+    //   });
 
-    }
+    // }
 
   }
 
@@ -74,8 +74,6 @@ export default class Login extends Component {
         }
 
       });
-
-      
 
   }
 
@@ -161,7 +159,7 @@ onSubmit(event) {
                   self.setState({
 
                       showErrorAlert: false,
-                      redirect: '/dashboard'
+                      redirect: '/dashboard/users'
 
                   });
 
@@ -189,7 +187,7 @@ onSubmit(event) {
 
           });
 
-  }
+    }
 
   }
 
@@ -331,7 +329,7 @@ onSubmit(event) {
                         </button>
                     </div>
                     <div className="">
-                        <Link to="/dashboard" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <Link to="/dashboard/users" className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Back
                         </Link>
                     </div>

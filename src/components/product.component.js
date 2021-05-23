@@ -7,15 +7,109 @@ import {Link} from 'react-router-dom';
 
 import { Helmet } from "react-helmet";
 
+import Spinner from "./spinner.component";
+
+import AuthenticationService from "../services/authentication.service";
+
+import ProductService from '../services/product.service';
+
 //define login class
 export default class Product extends Component {
+
+    //administrator constructor
+    constructor(props) {
+
+        //allow access to props within constructor
+        super(props);
+
+        //assign default state
+        this.state = {
+
+            currentUser: AuthenticationService.getCurrentUser(),
+            products: {},
+            redirect: null,
+            loading: false
+
+        };
+
+    }
+
+    //invoked after component is mounted
+    componentDidMount() {
+
+        //call get users function
+        this.getProducts();
+
+    }
+
+    //get active products
+    getProducts() {
+
+        var self = this;
+
+        self.setState({
+            loading: true
+        });
+
+        ProductService.getProducts(true)
+        .then(function (products) {
+
+            self.setState({
+
+                products: products.data,
+                loading: false
+
+            });
+
+        })
+        .catch(function (error) {
+
+            self.setState({
+
+                message: "No products found.",
+                // showInvalidPost: true,
+                loading: false
+
+            });
+
+            console.error(error);
+
+        })
+
+    }
+
+    //loop and generate products
+    getProductHtml() {
+
+        var self = this;
+
+        return Object.entries(self.state.products).map(([key, value]) => {
+        
+            return <div key={key} className="rounded overflow-hidden shadow-lg bg-white w-5/6 mx-auto my-4">
+                <Link to={'/products/detail/?productId='+ value._id}>
+                    <img className="w-full" src="https://dummyimage.com/200x200" alt="Mountain"/>
+                </Link>
+                <div className="px-6 py-4">
+                    <div className="font-bold text-xl mb-2">{value.name}</div>
+                    <p className="text-gray-700 text-base">{value.description}</p>
+                    <p className="mt-4 font-bold text-2xl">£{value.price}</p>
+                </div>
+                <div className="px-6 pb-4">
+                    <Link to={'/products/detail/?productId='+ value._id} className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
+                    View
+                    </Link>
+                </div>
+            </div>;
+        });
+
+    }
 
   //render login component
   render() {
 
     return (<div>
         <Helmet>
-            <title>Digital-Commerce | Product Details</title>
+            <title>Digital-Commerce | Products</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden min-h-screen">
 
@@ -31,78 +125,16 @@ export default class Product extends Component {
             </div>
         </section>
 
-        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-4">
-            <div className="rounded overflow-hidden shadow-lg bg-white">
-                <img className="w-full" src="https://dummyimage.com/420x260" alt="Mountain"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Mountain</div>
-                    <p className="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                    <p className="mt-4 font-bold text-2xl">£16.00</p>
-                </div>
-                <div className="px-6 pb-4">
-                    <Link to="/products/view/1" className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                    View Product
-                    </Link>
-                </div>
-            </div>
+        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
 
-            <div className="rounded overflow-hidden shadow-lg bg-white">
-                <img className="w-full" src="https://dummyimage.com/420x260" alt="River"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">River</div>
-                    <p className="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                    <p className="mt-4 font-bold">£16.00</p>
-                </div>
-            </div>
+        {this.state.loading && (
 
-            <div className="rounded overflow-hidden shadow-lg bg-white">
-                <img className="w-full" src="https://dummyimage.com/420x260" alt="Forest"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Forest</div>
-                    <p className="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                    <p className="mt-4 font-bold">£16.00</p>
-                </div>
-            </div>
+            <Spinner />
 
-            <div className="rounded overflow-hidden shadow-lg bg-white">
-                <img className="w-full" src="https://dummyimage.com/420x260" alt="Forest"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Forest</div>
-                    <p className="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                    <p className="mt-4 font-bold">£16.00</p>
-                </div>
-            </div>
+        )}
 
-            <div className="rounded overflow-hidden shadow-lg bg-white">
-                <img className="w-full" src="https://dummyimage.com/420x260" alt="Forest"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Forest</div>
-                    <p className="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                    v
-                </div>
-            </div>
+        {this.getProductHtml()}
 
-            <div className="rounded overflow-hidden shadow-lg bg-white">
-                <img className="w-full" src="https://dummyimage.com/420x260" alt="Forest"/>
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">Forest</div>
-                    <p className="text-gray-700 text-base">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                    </p>
-                    <p className="mt-4 font-bold">£16.00</p>
-                </div>
-            </div>
         </div>
         </div>
     </div>

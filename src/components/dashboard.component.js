@@ -12,6 +12,11 @@ import { Redirect } from "react-router-dom";
 import DashboardNavBar from "./dashboardnavbar.component";
 
 import DashboardUsers from "./dashboardusers.component";
+import DashboardProducts from "./dashboardproducts.component";
+
+import DashboardCreateUser from "./dashboardcreateuser.component";
+import DashboardCreateProduct from "./dashboardcreateproduct.component";
+import DashboardEditProduct from "./dashboardeditproduct.component";
 
 //import services
 import AuthenticationService from '../services/authentication.service';
@@ -29,12 +34,9 @@ export default class Dashboard extends Component {
     this.state = {
 
         currentUser: AuthenticationService.getCurrentUser(),
-        redirect: null,
-        activePage: 'User Management'
+        redirect: null
 
     };
-
-    this.DashboardCallBack = this.DashboardCallBack.bind(this);
 
   }
 
@@ -53,15 +55,29 @@ export default class Dashboard extends Component {
 
   }
 
-  DashboardCallBack(pageName) {
+  renderManagement() {
 
-    var self = this;
+    var pathName = this.props.history.location.pathname;
 
-    self.setState({
+    if(pathName.includes("/dashboard/products/edit")) {
 
-      activePage: pageName
+      return <DashboardEditProduct />;
 
-    });
+    }
+
+    switch(pathName) {
+      case '/dashboard/users':
+        return <DashboardUsers />;
+      case '/dashboard/users/create':
+        return <DashboardCreateUser />;
+      case '/dashboard/products':
+        return <DashboardProducts />;
+      case '/dashboard/products/create':
+        return <DashboardCreateProduct />;
+      default:
+        return null;
+
+    }
 
   }
 
@@ -84,13 +100,9 @@ export default class Dashboard extends Component {
 
             <div className="relative bg-gray-200 overflow-hidden min-h-screen">
 
-              <DashboardNavBar DashboardCallBack={this.DashboardCallBack} />
+              <DashboardNavBar />
 
-              {this.state.activePage === 'User Management' && (
-
-                <DashboardUsers />
-
-              )}
+              {this.renderManagement()}
 
             </div>
 

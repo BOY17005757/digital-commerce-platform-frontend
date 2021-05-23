@@ -10,10 +10,11 @@ import {Link} from 'react-router-dom';
 import Spinner from "./spinner.component";
 
 import AuthenticationService from "../services/authentication.service";
-import UserService from '../services/user.service';
+// import UserService from '../services/user.service';
+import ProductService from '../services/product.service';
 
 //define login class
-export default class DashboardUsers extends Component {
+export default class DashboardProducts extends Component {
 
     //administrator constructor
     constructor(props) {
@@ -25,7 +26,7 @@ export default class DashboardUsers extends Component {
         this.state = {
 
             currentUser: AuthenticationService.getCurrentUser(),
-            users: {},
+            products: {},
             redirect: null,
             loading: false
 
@@ -37,110 +38,91 @@ export default class DashboardUsers extends Component {
     componentDidMount() {
 
         //call get users function
-        this.getUsers();
+        this.getProducts();
 
     }
 
-    //get all users
-    getUsers() {
+    //get all products
+    getProducts() {
 
         var self = this;
 
-        if (self.state.currentUser) {
+        self.setState({
+            loading: true
+        });
 
-            self.setState({
-                loading: true
-            });
-
-            UserService.getAdmin()
-            .then(function (admin) {
-
-                self.setState({
-
-                    users: admin.data,
-                    loading: false
-
-                });
-
-            })
-            .catch(function (error) {
-
-                self.setState({
-
-                    message: "No users found.",
-                    showInvalidPost: true,
-                    loading: false
-
-                });
-
-                console.error(error);
-
-            })
-
-        } else {
+        ProductService.getProducts(false)
+        .then(function (products) {
 
             self.setState({
 
-                redirect: '/login'
+                products: products.data,
+                loading: false
 
             });
 
-        }
+        })
+        .catch(function (error) {
 
-    }
+            self.setState({
 
-    //delete user
-    removeUser(userid) {
-
-        var self = this;
-
-        AuthenticationService.removeUser(userid)
-            .then(function (user) {
-
-                self.getUsers();
-
-            })
-            .catch(function (error) {
-
-                console.error(error);
+                message: "No products found.",
+                // showInvalidPost: true,
+                loading: false
 
             });
 
+            console.error(error);
+
+        })
+
     }
 
-    //loop and generate users
-    getUserHtml() {
+    //delete product
+    removeProduct(productId) {
 
         var self = this;
 
-        return Object.entries(self.state.users).map(([key, value]) => {
+        ProductService.removeProduct(productId)
+        .then(function (product) {
 
-            //loop authorities for output
-            var authorities = [];
+            self.getProducts();
 
-            value.roleNames.forEach(function(element) {
-            
-                authorities.push(element.roleName);
+        })
+        .catch(function (error) {
 
-            })
+            console.error(error);
+
+        });
+
+    }
+
+    //edit product
+    editProduct(productId) {
+
+
+
+    }
+
+    //loop and generate products
+    getProductHtml() {
+
+        var self = this;
+
+        return Object.entries(self.state.products).map(([key, value]) => {
         
             return <tr key={key}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value._id}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                             <div className="ml-4">
-                                <div className="text-sm font-medium text-gray-800">{value.firstName + ' ' + value.lastName}</div>
-                                <div className="text-sm text-gray-500">{value.emailAddress}</div>
+                                <div className="text-sm font-medium text-gray-800">{value.name}</div>
+                                <div className="text-sm text-gray-500">{value.description}</div>
                             </div>
                         </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-800">{value.username}</div>
-                        {/* <div className="text-sm text-gray-500">{person.department}</div> */}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                            {value.status && (
+                        {value.status && (
                             <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                 Active
                             </span>
@@ -150,14 +132,18 @@ export default class DashboardUsers extends Component {
                                 Disabled
                             </span>
                         )}
-                        </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{authorities.toString().replace(',',', ')}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">£{value.price}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-800">{Moment(value.createdAt).format("DD/MM/YYYY HH:mm")}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button onClick={() => this.removeUser(value._id)} className="text-red-600 hover:text-red-800">
+                    <td className="whitespace-nowrap text-right text-sm font-medium">
+                        <Link to={'/dashboard/products/edit/?productId='+value._id} className="text-yellow-600 hover:text-red-800">
+                            Edit
+                        </Link>
+                    </td>
+                    <td className="pr-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onClick={() => this.removeProduct(value._id)} className="text-red-600 hover:text-red-800">
                             Remove
                         </button>
                     </td>
@@ -172,13 +158,13 @@ export default class DashboardUsers extends Component {
         return (
             <div>
                 <div className="flex flex-col mx-auto w-40 mt-4">
-                    <Link to="/dashboard/users/create" className="m-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
-                    Create User
+                    <Link to="/dashboard/products/create" className="m-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
+                        Create Product
                     </Link>
                 </div>
 
                 <div className="flex flex-col">
-                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">All Users</h1>
+                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">All Products</h1>
 
                 {this.state.loading && (
 
@@ -192,19 +178,21 @@ export default class DashboardUsers extends Component {
                         <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-indigo-200">
                             <tr>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">User ID</th>    
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Full Name / Email Address</th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Username</th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Product ID</th>    
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Name</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Status</th>
-                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Roles</th>
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Price</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Creation Date</th>
                                 <th scope="col" className="relative px-6 py-3">
                                     <span className="sr-only">Edit</span>
                                 </th>
+                                <th scope="col" className="relative px-6 py-3">
+                                    <span className="sr-only">Remove</span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="bg-white text-white divide-y divide-gray-200">
-                            {this.getUserHtml()}
+                            {this.getProductHtml()}
                         </tbody>
                         </table>                        
                     </div>

@@ -177,7 +177,7 @@ export default class Header extends Component {
 
                 {this.props.adminUser && (
 
-                  <Link to="/dashboard" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                  <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
                     Dashboard
                   </Link>
 

@@ -7,11 +7,56 @@ import { Helmet } from "react-helmet";
 
 import {Link} from "react-router-dom";
 
+import { Redirect } from "react-router-dom";
+
+//import services
+import AuthenticationService from '../services/authentication.service';
+
 //define login class
 export default class ShoppingCart extends Component {
 
+    //administrator constructor
+    constructor(props) {
+
+        //allow access to props within constructor
+        super(props);
+
+        //assign default state
+        this.state = {
+
+            currentUser: AuthenticationService.getCurrentUser(),
+            redirect: null
+
+        };
+
+    }
+
+    //invoked after component is mounted
+    componentDidMount() {
+
+        console.log(this.state.currentUser)
+
+        if(this.state.currentUser === null) {
+
+            this.setState({
+
+            redirect: '/'
+
+            });
+
+        }
+
+    }
+
   //render login component
   render() {
+
+    //handle redirect url
+    if(this.state.redirect) {
+
+        return <Redirect to={this.state.redirect} />;
+  
+    }
 
     return (
         <div>
@@ -39,14 +84,14 @@ export default class ShoppingCart extends Component {
                     <tr>
                         <td className="hidden pb-4 md:table-cell">
                         <Link to="#">
-                            <img src="https://limg.app/i/Calm-Cormorant-Catholic-Pinball-Blaster-yM4oub.jpeg" class="w-20 rounded" alt="Thumbnail"/>
+                            <img src="https://limg.app/i/Calm-Cormorant-Catholic-Pinball-Blaster-yM4oub.jpeg" className="w-20 rounded" alt="Thumbnail"/>
                         </Link>
                         </td>
                         <td>
                         <Link to="#">
                             <p className="mb-2 md:ml-4">Earphone</p>
                             <form action="" method="POST">
-                            <button type="submit" class="text-gray-700 md:ml-4">
+                            <button type="submit" className="text-gray-700 md:ml-4">
                                 <small>(Remove item)</small>
                             </button>
                             </form>
@@ -56,7 +101,7 @@ export default class ShoppingCart extends Component {
                         <div className="w-20 h-10">
                             <div className="relative flex flex-row w-full h-8">
                             <input type="number" value="2"
-                            class="w-full font-semibold text-center text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black" />
+                            className="w-full font-semibold text-center text-gray-700 bg-gray-200 outline-none focus:outline-none hover:text-black focus:text-black" />
                             </div>
                         </div>
                         </td>
@@ -79,7 +124,7 @@ export default class ShoppingCart extends Component {
                         <h1 className="ml-2 font-bold uppercase">Instructions for seller</h1>
                     </div>
                     <div className="p-4">
-                        <textarea class="w-full h-24 p-2 bg-white focus:ring-2 focus:ring-indigo-200 text-gray-900 rounded" placeholder="If you have some information for the seller, please enter it here."></textarea>
+                        <textarea className="w-full h-24 p-2 bg-white focus:ring-2 focus:ring-indigo-200 text-gray-900 rounded" placeholder="If you have some information for the seller, please enter it here."></textarea>
                     </div>
                     </div>
                     <div className="lg:px-2 lg:w-1/2">
@@ -113,7 +158,7 @@ export default class ShoppingCart extends Component {
                             </div>
                         <Link to="#">
                             <button className="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-indigo-600 rounded-full shadow item-center hover:bg-gray-700 focus:shadow-outline focus:outline-none ">
-                            <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" class="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
+                            <svg aria-hidden="true" data-prefix="far" data-icon="credit-card" className="w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M527.9 32H48.1C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48.1 48h479.8c26.6 0 48.1-21.5 48.1-48V80c0-26.5-21.5-48-48.1-48zM54.1 80h467.8c3.3 0 6 2.7 6 6v42H48.1V86c0-3.3 2.7-6 6-6zm467.8 352H54.1c-3.3 0-6-2.7-6-6V256h479.8v170c0 3.3-2.7 6-6 6zM192 332v40c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h72c6.6 0 12 5.4 12 12zm192 0v40c0 6.6-5.4 12-12 12H236c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h136c6.6 0 12 5.4 12 12z"/></svg>
                             <span className="ml-2 mt-5px ">Procceed to checkout</span>
                             </button>
                         </Link>
