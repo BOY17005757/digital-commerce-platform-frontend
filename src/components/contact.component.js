@@ -12,7 +12,7 @@ export default class Contact extends Component {
   render() {
 
     return (
-        <div>
+        <div className="min-h-screen bg-gray-100">
         <Helmet>
             <title>Digital-Commerce | Contact</title>
         </Helmet>

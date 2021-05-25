@@ -66,12 +66,12 @@ class NavBar extends Component {
                     <div className="flex-shrink-0 flex items-center">
                     <img
                         className="block lg:hidden h-8 w-auto"
-                        src="/templateLogo.png"
+                        src="/logo.png"
                         alt="Workflow"
                     />
                     <img
                         className="hidden lg:block h-8 w-auto"
-                        src="/templateLogo.png"
+                        src="/logo.png"
                         alt="Workflow"
                     />
                     </div>

@@ -33,7 +33,7 @@ export default class Footer extends Component {
             <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
                 <Link to="/" className="flex title-font font-medium items-center md:justify-start justify-center text-white">
                   <img className="h-8 w-auto sm:h-6"
-                      src="./templateLogo.png"
+                      src="./logo.png"
                       alt=""
                   />
                   <span className="ml-3 text-xl">digital-commerce-platform</span>

@@ -8,9 +8,11 @@ import { Redirect } from "react-router-dom";
 import {Link} from 'react-router-dom';
 
 import WarningAlert from './warningalert.component';
+import Notification from './notification.component';
 
 import AuthenticationService from "../services/authentication.service";
 import ProductService from '../services/product.service';
+import ShoppingCartService from '../services/shoppingcart.service';
 
 //define login class
 export default class ProductDetail extends Component {
@@ -29,9 +31,13 @@ export default class ProductDetail extends Component {
             redirect: null,
             loading: false,
             urlProductId: '',
-            quantity: 1
+            quantity: 1,
+            showNotification: false,
+            notificationCounter: 0
 
         };
+
+        this.tick = this.tick.bind(this);
 
     }
 
@@ -58,7 +64,7 @@ export default class ProductDetail extends Component {
 
         self.setState({
 
-            urlUserId: search
+            urlProductId: productid
 
         });
 
@@ -97,36 +103,39 @@ export default class ProductDetail extends Component {
 
     }
 
+    onClick(event) {
+
+        var self = this;
+
+        ShoppingCartService.addShoppingCartProduct(this.state.currentUser.id,this.state.urlProductId,1)
+        .then(function (product) {
+
+            self.showNotification();
+
+        })
+        .catch(function (error) {
+
+            console.error(error);
+
+        })
+
+    }
+
     //loop and generate product
     getProductHtml() {
 
         return <div className="mx-auto flex flex-wrap">
-            <div class="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4">
                 <div>
                     <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">{this.state.product.name}</h1>
                     <p className="leading-relaxed">{this.state.product.description}</p>
-                    {/* <div className="flex items-center pb-5 border-b-2 border-gray-100 mb-5"/> */}
-                    {/* <div className="w-20 h-10 mt-4">
-                        <span className="title-font font-bold text-xl text-gray-900">Quantity</span>
-                        <div className="relative flex flex-row w-full h-8 mt-2">
-                            <form onSubmit={this.onSubmit.bind(this)}>
-                                <input type="number"
-                                    id="quantity"
-                                    name="quantity"
-                                    required
-                                    value={this.state.quantity}
-                                    onChange={this.handleChange.bind(this)}
-                                    className="w-full font-medium text-center text-gray-900 bg-gray-200 outline-none" />
-                            </form>
-                        </div>
-                    </div> */}
                     <div className="flex mt-5 items-center pb-5 border-b-2 border-gray-100 mb-5"/>
                         <span className="title-font font-bold text-xl text-gray-900">Price</span>
                         <div className="flex">
                             <span className="title-font text-2xl text-gray-900">£{this.state.product.price}</span>
                         </div>
                         {(this.state.currentUser !== null && (
-                            <button className="my-4 flex ml-auto whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
+                            <button onClick={this.onClick.bind(this)} className="my-4 flex ml-auto whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
                                 Add to Cart
                             </button>
                         ))}
@@ -158,10 +167,42 @@ export default class ProductDetail extends Component {
 
     }
 
-    //form submit on register
-    onSubmit(event) {
+    //get current date & time
+    tick() {
 
+        this.setState({
 
+            notificationCounter: this.state.notificationCounter + 1
+
+        }, function() {
+
+            if(this.state.notificationCounter >= 5) {
+
+                this.setState({
+
+                    showNotification: false,
+                    notificationCounter: 0
+
+                }, function() {
+
+                    clearInterval(this.interval);
+
+                })
+
+            }
+
+        });
+        
+    }
+
+    showNotification() {
+
+        //set tick interval to 1 second
+        this.interval = setInterval(this.tick, 1000);
+
+        this.setState({
+            showNotification: true
+        })
 
     }
 
@@ -177,15 +218,20 @@ export default class ProductDetail extends Component {
 
     return (
         <div>
+        {this.state.showNotification && (
+            <div className="relative">
+                <Notification/>
+            </div>
+        )}
+        <div className="min-h-screen bg-gray-100">
             <section className="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex lg:justify-center">
             <div className="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
                 <div className="container px-24 py-24 mx-auto">
-
                     {this.getProductHtml()}
-
                 </div>
                 </div>
             </section>
+        </div>
         </div>
     );
 

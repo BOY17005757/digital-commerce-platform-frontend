@@ -153,7 +153,7 @@ export default class SignIn extends Component {
           <div>
             <img
               className="mx-auto h-12 w-auto"
-              src="./templateLogo.png"
+              src="./logo.png"
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>

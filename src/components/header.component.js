@@ -97,7 +97,7 @@ export default class Header extends Component {
                 <Link to="/">
                   <img
                     className="h-8 w-auto sm:h-10"
-                    src="./templateLogo.png"
+                    src="./logo.png"
                     alt=""
                   />
               </Link>
@@ -230,7 +230,7 @@ export default class Header extends Component {
                     <Link to="/">
                       <img
                         className="h-8 w-auto"
-                        src="./templateLogo.png"
+                        src="./logo.png"
                         alt="Workflow"
                       />
                     </Link>
