@@ -97,13 +97,6 @@ export default class DashboardProducts extends Component {
 
     }
 
-    //edit product
-    editProduct(productId) {
-
-
-
-    }
-
     //loop and generate products
     getProductHtml() {
 
@@ -136,6 +129,11 @@ export default class DashboardProducts extends Component {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">£{value.price}</td>
                     <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-800">{Moment(value.createdAt).format("DD/MM/YYYY HH:mm")}</div>
+                    </td>
+                    <td className="whitespace-nowrap text-right text-sm font-medium">
+                        <Link to={'/dashboard/products/upload/?productId='+value._id} className="text-green-600 hover:text-green-800">
+                            Upload Image
+                        </Link>
                     </td>
                     <td className="whitespace-nowrap text-right text-sm font-medium">
                         <Link to={'/dashboard/products/edit/?productId='+value._id} className="text-yellow-600 hover:text-red-800">
@@ -183,6 +181,9 @@ export default class DashboardProducts extends Component {
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Status</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Price</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Creation Date</th>
+                                <th scope="col" className="relative px-6 py-3">
+                                    <span className="sr-only">Upload Image</span>
+                                </th>
                                 <th scope="col" className="relative px-6 py-3">
                                     <span className="sr-only">Edit</span>
                                 </th>

@@ -199,8 +199,10 @@ export default class Body extends Component {
                   component={Product} />
             <Route path="/products/detail"
                   component={ProductDetails} />
-            <Route exact path="/shoppingcart"
+            <Route path="/shoppingcart"
                   component={ShoppingCart} />
+            {/* <Route exact path="/shoppingcart/checkout"
+                  component={ShoppingCartCheckout} /> */}
             <Route exact path="/about"
                   component={About} />
             <Route exact path="/contact"

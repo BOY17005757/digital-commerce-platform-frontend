@@ -20,7 +20,7 @@ export default class Notification extends Component {
                         </svg>
                     </div>
                     <div className="ml-2 mr-6">
-                    <span className="font-semibold text-white">Added to Shopping Cart!</span>
+                    <span className="font-semibold text-white">{this.props.message}</span>
                     </div>
                 </div>
                 </div>

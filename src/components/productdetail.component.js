@@ -220,12 +220,12 @@ export default class ProductDetail extends Component {
         <div>
         {this.state.showNotification && (
             <div className="relative">
-                <Notification/>
+                <Notification message="Added to Shopping Cart!"/>
             </div>
         )}
         <div className="min-h-screen bg-gray-100">
             <section className="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex lg:justify-center">
-            <div className="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg">
+            <div className="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg mt-20">
                 <div className="container px-24 py-24 mx-auto">
                     {this.getProductHtml()}
                 </div>

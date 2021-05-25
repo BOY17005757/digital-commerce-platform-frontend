@@ -8,10 +8,11 @@ import {Link} from 'react-router-dom';
 import { Helmet } from "react-helmet";
 
 import Spinner from "./spinner.component";
+import Notification from './notification.component';
 
 import AuthenticationService from "../services/authentication.service";
-
 import ProductService from '../services/product.service';
+import ShoppingCartService from '../services/shoppingcart.service';
 
 //define login class
 export default class Product extends Component {
@@ -28,9 +29,13 @@ export default class Product extends Component {
             currentUser: AuthenticationService.getCurrentUser(),
             products: {},
             redirect: null,
-            loading: false
+            loading: false,
+            showNotification: false,
+            notificationCounter: 0
 
         };
+
+        this.tick = this.tick.bind(this);
 
     }
 
@@ -78,6 +83,63 @@ export default class Product extends Component {
 
     }
 
+    //get current date & time
+    tick() {
+
+        this.setState({
+
+            notificationCounter: this.state.notificationCounter + 1
+
+        }, function() {
+
+            if(this.state.notificationCounter >= 5) {
+
+                this.setState({
+
+                    showNotification: false,
+                    notificationCounter: 0
+
+                }, function() {
+
+                    clearInterval(this.interval);
+
+                })
+
+            }
+
+        });
+        
+    }
+
+    showNotification() {
+
+        //set tick interval to 1 second
+        this.interval = setInterval(this.tick, 1000);
+
+        this.setState({
+            showNotification: true
+        })
+
+    }
+
+    addToShoppingCart(productId) {
+
+        var self = this;
+
+        ShoppingCartService.addShoppingCartProduct(this.state.currentUser.id,productId,1)
+        .then(function (product) {
+
+            self.showNotification();
+
+        })
+        .catch(function (error) {
+
+            console.error(error);
+
+        })
+
+    }
+
     //loop and generate products
     getProductHtml() {
 
@@ -98,6 +160,11 @@ export default class Product extends Component {
                     <Link to={'/products/detail/?productId='+ value._id} className="whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
                     View
                     </Link>
+                    {(this.state.currentUser !== null && (
+                        <button onClick={() => this.addToShoppingCart(value._id)} className="my-4 flex ml-2 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
+                            Add to Cart
+                        </button>
+                    ))}
                 </div>
             </div>;
         });
@@ -112,7 +179,11 @@ export default class Product extends Component {
             <title>Digital-Commerce | Products</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden min-h-screen">
-
+        {this.state.showNotification && (
+            <div className="relative">
+                <Notification message="Added to Shopping Cart!"/>
+            </div>
+        )}
         <section className="relative w-full max-w-md px-5 py-4 rounded-md ml-auto mt-4">
             <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">

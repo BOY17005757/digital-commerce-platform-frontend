@@ -17,6 +17,7 @@ import DashboardProducts from "./dashboardproducts.component";
 import DashboardCreateUser from "./dashboardcreateuser.component";
 import DashboardCreateProduct from "./dashboardcreateproduct.component";
 import DashboardEditProduct from "./dashboardeditproduct.component";
+import DashboardProductImageUpload from "./dashboardproductsimageupload.component";
 
 //import services
 import AuthenticationService from '../services/authentication.service';
@@ -62,6 +63,12 @@ export default class Dashboard extends Component {
     if(pathName.includes("/dashboard/products/edit")) {
 
       return <DashboardEditProduct />;
+
+    }
+
+    if(pathName.includes("/dashboard/products/upload")) {
+
+      return <DashboardProductImageUpload />;
 
     }
 

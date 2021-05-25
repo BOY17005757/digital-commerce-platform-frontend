@@ -5,7 +5,12 @@ module.exports = {
     extend: {},
   },
   variants: {
-    extend: {},
+    extend: {
+      opacity: ['disabled'],
+      cursor: ['disabled'],
+      pointerEvents: ['disabled'],
+      backgroundColor: ['disabled']
+    }
   },
   plugins: [
     require('@tailwindcss/forms')
