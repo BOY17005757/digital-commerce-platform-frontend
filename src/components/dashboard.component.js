@@ -13,11 +13,15 @@ import DashboardNavBar from "./dashboardnavbar.component";
 
 import DashboardUsers from "./dashboardusers.component";
 import DashboardProducts from "./dashboardproducts.component";
+import DashboardOrders from "./dashboardorders.component";
+import DashboardCollections from "./dashboardcollections.component";
 
 import DashboardCreateUser from "./dashboardcreateuser.component";
 import DashboardCreateProduct from "./dashboardcreateproduct.component";
 import DashboardEditProduct from "./dashboardeditproduct.component";
 import DashboardProductImageUpload from "./dashboardproductsimageupload.component";
+import DashbordCreateCollection from "./dashboardcreatecollection.component";
+import DashboardSite from "./dashboardsite.component";
 
 //import services
 import AuthenticationService from '../services/authentication.service';
@@ -81,6 +85,14 @@ export default class Dashboard extends Component {
         return <DashboardProducts />;
       case '/dashboard/products/create':
         return <DashboardCreateProduct />;
+      case '/dashboard/orders':
+        return <DashboardOrders />;
+      case '/dashboard/collections':
+        return <DashboardCollections />;
+      case '/dashboard/collections/create':
+       return <DashbordCreateCollection />;
+       case '/dashboard/site':
+        return <DashboardSite />;
       default:
         return null;
 

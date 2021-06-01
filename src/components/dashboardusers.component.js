@@ -178,7 +178,7 @@ export default class DashboardUsers extends Component {
                 </div>
 
                 <div className="flex flex-col">
-                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">All Users</h1>
+                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">Users</h1>
 
                 {this.state.loading && (
 

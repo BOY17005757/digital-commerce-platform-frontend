@@ -27,7 +27,7 @@ export default class Login extends Component {
   render() {
 
     return (
-        <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden">
+        <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden z-0">
 
         <div className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block" aria-hidden="true">
         <svg width="319" height="198" xmlnsXlink="http://www.w3.org/1999/xlink">

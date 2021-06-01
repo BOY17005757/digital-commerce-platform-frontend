@@ -162,7 +162,7 @@ export default class DashboardProducts extends Component {
                 </div>
 
                 <div className="flex flex-col">
-                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">All Products</h1>
+                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">Products</h1>
 
                 {this.state.loading && (
 

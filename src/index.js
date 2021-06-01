@@ -21,6 +21,7 @@ import ShoppingCart from "./components/shoppingcart.component";
 import About from "./components/about.component";
 import Contact from "./components/contact.component";
 import ProductDetails from "./components/productdetail.component";
+import ShoppingCartSuccess from "./components/shoppingcartsuccess.component";
 
 //import services
 import AuthenticationService from "./services/authentication.service";
@@ -199,10 +200,10 @@ export default class Body extends Component {
                   component={Product} />
             <Route path="/products/detail"
                   component={ProductDetails} />
-            <Route path="/shoppingcart"
+            <Route exact path="/shoppingcart"
                   component={ShoppingCart} />
-            {/* <Route exact path="/shoppingcart/checkout"
-                  component={ShoppingCartCheckout} /> */}
+            <Route exact path="/shoppingcart/success"
+                  component={ShoppingCartSuccess} />
             <Route exact path="/about"
                   component={About} />
             <Route exact path="/contact"
