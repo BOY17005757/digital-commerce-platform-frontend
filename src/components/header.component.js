@@ -258,19 +258,43 @@ export default class Header extends Component {
                 </div>
                 <div className="py-6 px-5 space-y-6">
                   <div className="grid grid-cols-1 gap-y-4 gap-x-8">
+
                     <Link to="/about" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
                         About
                     </Link>
                     <Link to="/contact" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
                         Contact
                     </Link>
-                    <Link to="/dashboard" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
-                        Dashboard
+                    
+                    {this.props.adminUser && (
+                    <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                      Dashboard
                     </Link>
-                    <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2 flex items-center">
-                        <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600 mr-2" aria-hidden="true" />
-                        <span className="text-base font-medium text-white hover:text-gray-400 mr-2">Shopping Cart</span>
+                    )}
+
+                    {!this.props.user && (
+                    <Link to="/signin" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
+                      Sign in
                     </Link>
+                    )}
+                    {!this.props.user && (
+                    <Link to="/signup" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      Sign up
+                    </Link>
+                    )}
+                    {this.props.user && (
+                    <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-4">
+                      Sign out
+                    </button>
+                    )}
+                    {this.props.user && (
+                    <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center">
+                        <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600 ml-8" aria-hidden="true" />
+                        <span className="ml-2 text-base font-medium text-white hover:text-gray-400">Shopping Cart</span>
+                    </Link>
+                    )}
+
                   </div>
                   <div>
                     
