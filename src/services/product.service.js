@@ -5,8 +5,7 @@ import axios from 'axios';
 import authenticationHeader from './authentication-header';
 
 //set api url based on production or development build
-const API_URL = "http://localhost:8080/api/products/";
-//process.env.NODE_ENV === 'production' ? ("https://social-link-backend.herokuapp.com/api/access/") : "http://localhost:8080/api/access/";
+const API_URL = process.env.NODE_ENV === 'production' ? ("https://digital-commerce-platform-back.herokuapp.com/api/products/") : "http://localhost:8080/api/products/";
 
 //define product service class
 class ProductService {
