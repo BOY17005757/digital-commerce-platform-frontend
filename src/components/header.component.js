@@ -177,7 +177,7 @@ export default class Header extends Component {
 
                 {this.props.adminUser && (
 
-                  <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                  <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
                     Dashboard
                   </Link>
 
@@ -195,15 +195,15 @@ export default class Header extends Component {
                   </Link>
                 )}
                 {this.props.user && (
-                  <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-4">
-                    Sign out
-                  </button>
-                )}
-                {this.props.user && (
                   <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center">
                       <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600 ml-8" aria-hidden="true" />
                       <span className="ml-2 text-base font-medium text-white hover:text-gray-400">Shopping Cart</span>
                   </Link>
+                )}
+                {this.props.user && (
+                  <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                    Sign out
+                  </button>
                 )}
               </div>
             </div>
@@ -267,48 +267,42 @@ export default class Header extends Component {
                     </Link>
                     
                     {this.props.adminUser && (
-                    <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-8">
+                    <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
                       Dashboard
                     </Link>
                     )}
-
-                    {!this.props.user && (
-                    <Link to="/signin" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
-                      Sign in
-                    </Link>
-                    )}
-                    {!this.props.user && (
-                    <Link to="/signup" className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                      Sign up
-                    </Link>
-                    )}
                     {this.props.user && (
-                    <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 mx-4">
-                      Sign out
-                    </button>
-                    )}
-                    {this.props.user && (
-                    <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center">
-                        <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600 ml-8" aria-hidden="true" />
+                    <Link to="/shoppingcart" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 flex items-center p-2">
+                        <ShoppingCartIcon className="flex-shrink-0 h-8 w-8 text-indigo-600" aria-hidden="true" />
                         <span className="ml-2 text-base font-medium text-white hover:text-gray-400">Shopping Cart</span>
                     </Link>
                     )}
-
+                    {this.props.user && (
+                    <>
+                    <button onClick={this.signOut} className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
+                      Sign out
+                    </button>
+                    </>
+                    )}
                   </div>
                   <div>
-                    
-                    <Link to="/signup"
-                      className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                    >
-                      Sign up
+                  
+                  {!this.props.user && (
+                  <Link to="/signup"
+                    className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                  >
+                    Sign up
+                  </Link>
+                  )}
+                  {!this.props.user && (
+                  <p className="mt-6 text-center text-base font-medium text-gray-500">
+                    Existing customer?{' '}
+                    <Link to="/signin" className="text-indigo-600 hover:text-indigo-500">
+                      Sign in
                     </Link>
-                    <p className="mt-6 text-center text-base font-medium text-gray-500">
-                      Existing customer?{' '}
-                      <Link to="/signin" className="text-indigo-600 hover:text-indigo-500">
-                        Sign in
-                      </Link>
-                    </p>
+                  </p>
+                  )}
+
                   </div>
                 </div>
               </div>
