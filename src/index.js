@@ -2,17 +2,17 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
-
 import { createBrowserHistory } from "history";
 import { Helmet } from "react-helmet";
 import { isExpired } from "react-jwt";
 
+//import css
 import "./styles/tailwind.generated.css";
 
+//import components
 import Home from "./components/home.component";
 import SignIn from "./components/signin.component";
 import SignUp from "./components/signup.component";
-// import NavBar from "./components/navbar.component";
 import Dashboard from "./components/dashboard.component";
 import Product from "./components/product.component";
 import Header from "./components/header.component";
@@ -26,6 +26,9 @@ import ProductDetails from "./components/productdetail.component";
 import AuthenticationService from "./services/authentication.service";
 import UserService from "./services/user.service";
 import ManifestService from "./services/manifest.service";
+
+//import service worker
+import * as serviceWorker from './serviceWorkerRegistration';
 
 const history = createBrowserHistory();
 
@@ -251,4 +254,4 @@ export default class Body extends Component {
 ReactDOM.render(<Body></Body>, document.getElementById('root'));
 
 //call register service worker
-// serviceWorker.register();
+serviceWorker.register();
