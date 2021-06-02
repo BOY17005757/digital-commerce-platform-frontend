@@ -10,7 +10,6 @@ import {Link} from 'react-router-dom';
 import Spinner from "./spinner.component";
 
 import AuthenticationService from "../services/authentication.service";
-import UserService from '../services/user.service';
 import OrderService from '../services/order.service';
 
 //define dashboard orders class
@@ -92,24 +91,24 @@ export default class DashboardOrders extends Component {
 
     }
 
-    //delete user
-    // removeUser(userid) {
+    //delete order
+    removeOrder(headerid) {
 
-    //     var self = this;
+        var self = this;
 
-    //     AuthenticationService.removeUser(userid)
-    //         .then(function (user) {
+        OrderService.removeOrder(headerid)
+            .then(function (order) {
 
-    //             self.getUsers();
+                self.getOrders();
 
-    //         })
-    //         .catch(function (error) {
+            })
+            .catch(function (error) {
 
-    //             console.error(error);
+                console.error(error);
 
-    //         });
+            });
 
-    // }
+    }
 
     //loop and generate orders
     getOrderHtml() {
@@ -148,6 +147,16 @@ export default class DashboardOrders extends Component {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value.postalCode}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value.total}</td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value.status}</td>
+                    <td className="whitespace-nowrap text-right text-sm font-medium px-4">
+                        <Link to={'/dashboard/orders/lines/?headerId='+value._id} className="text-indigo-600 hover:text-indigo-800">
+                            View Lines
+                        </Link>
+                    </td>
+                    <td className="pr-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onClick={() => this.removeOrder(value._id)} className="text-red-600 hover:text-red-800">
+                            Remove
+                        </button>
+                    </td>
             </tr>;
         });
 
@@ -158,11 +167,11 @@ export default class DashboardOrders extends Component {
 
         return (
             <div>
-                <div className="flex flex-col mx-auto w-40 mt-4">
+                {/* <div className="flex flex-col mx-auto w-40 mt-4">
                     <Link to="/dashboard/users/create" className="m-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
                     Create User
                     </Link>
-                </div>
+                </div> */}
 
                 <div className="flex flex-col">
                 <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">Order Headers</h1>
@@ -194,9 +203,12 @@ export default class DashboardOrders extends Component {
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Postal Code</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Total</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Status</th>
-                                {/* <th scope="col" className="relative px-6 py-3">
-                                    <span className="sr-only">Edit</span>
-                                </th> */}
+                                <th scope="col" className="relative px-6 py-3">
+                                    <span className="sr-only">View Lines</span>
+                                </th>
+                                <th scope="col" className="relative px-6 py-3">
+                                    <span className="sr-only">Remove</span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody className="bg-white text-white divide-y divide-gray-200">

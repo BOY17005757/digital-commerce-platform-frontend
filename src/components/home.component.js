@@ -16,7 +16,7 @@ export default class Home extends Component {
     return (
         <div>
         <Helmet>
-          <title>Digital-Commerce | Home</title>
+          <title>{`${this.props.manifest.name}`} | Home</title>
         </Helmet>
         <div className="relative bg-white overflow-hidden min-h-screen">
         <div className="max-w-7xl mx-auto">
@@ -34,7 +34,7 @@ export default class Home extends Component {
               <div className="sm:text-center lg:text-left">
                 <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
                   <span className="block xl:inline">Welcome to</span>{' '}
-                  <span className="block text-indigo-600 xl:inline">digital-commerce-platform</span>
+                  <span className="block text-indigo-600 xl:inline">{this.props.manifest.name}</span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet nisl purus in mollis nunc sed id semper. Id ornare arcu odio ut sem. Pellentesque habitant morbi tristique senectus et.

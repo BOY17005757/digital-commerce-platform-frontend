@@ -14,7 +14,7 @@ export default class Contact extends Component {
     return (
         <div className="min-h-screen bg-gray-100">
         <Helmet>
-            <title>Digital-Commerce | Contact</title>
+            <title>{`${this.props.manifest.name}`} | Contact</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden">
 

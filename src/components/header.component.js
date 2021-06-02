@@ -231,7 +231,7 @@ export default class Header extends Component {
                       <img
                         className="h-8 w-auto"
                         src="./logo.png"
-                        alt="Workflow"
+                        alt=""
                       />
                     </Link>
                     <div className="-mr-2">

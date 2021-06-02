@@ -21,11 +21,11 @@ import ShoppingCart from "./components/shoppingcart.component";
 import About from "./components/about.component";
 import Contact from "./components/contact.component";
 import ProductDetails from "./components/productdetail.component";
-import ShoppingCartSuccess from "./components/shoppingcartsuccess.component";
 
 //import services
 import AuthenticationService from "./services/authentication.service";
 import UserService from "./services/user.service";
+import ManifestService from "./services/manifest.service";
 
 const history = createBrowserHistory();
 
@@ -44,10 +44,10 @@ export default class Body extends Component {
                   currentUser: AuthenticationService.getCurrentUser(),
                   username: '',
                   userid: '',
-                  displayTitle: '',
                   adminUser: false,
                   showNoInternetErrorMessage: false,
-                  redirect: null
+                  redirect: null,
+                  manifest: {}
 
             };
 
@@ -55,7 +55,6 @@ export default class Body extends Component {
             this.handleUser = this.handleUser.bind(this);
             this.loginCallBack = this.loginCallBack.bind(this);
             this.navCallback = this.navCallback.bind(this);
-            this.handleTitleChange = this.handleTitleChange.bind(this);
 
             //validate user logged in
             if (this.state.currentUser != null) {
@@ -76,22 +75,44 @@ export default class Body extends Component {
       componentDidMount() {
 
             //call handle user function
+            this.getManifest();
+
             this.handleUser();
 
       }
 
-      //update display title on page change via helmet
-      handleTitleChange(newState) {
+      getManifest() {
 
-            //check if title has changed
-            if (newState.title !== this.state.displayTitle) {
-
-                  this.setState({
-
-                        displayTitle: newState.title
-
+            var self = this;
+            
+            self.setState({
+                  loading: true
+            });
+            
+            ManifestService.getManifest()
+            .then(function (manifest) {
+            
+                  self.setState({
+            
+                        manifest: manifest.data,
+                        loading: false
+            
                   });
-            }
+                        
+            })
+            .catch(function (error) {
+            
+                  self.setState({
+            
+                        message: "No manifest found.",
+                        showInvalidPost: true,
+                        loading: false
+            
+                  });
+            
+                  console.error(error);
+            
+            })
 
       }
 
@@ -182,37 +203,42 @@ export default class Body extends Component {
 
       return (
       <div>
-        <Helmet onChangeClientState={this.handleTitleChange}/>
+        <Helmet />
         <Router history={history}>
           <Header key={this.state.userid} history={history} user={ this.state.username } userid={ this.state.userid } navCallBack={this.navCallback} adminUser={this.state.adminUser} />
           <Switch>
             <Route exact path="/"
-                  component={Home} />
+                  render={(props) => <Home {...props} manifest={this.state.manifest} />}
+                  />
             <Route exact path="/signin"
-                   render={(props) => <SignIn {...props} loginCallBack={this.loginCallBack} />}
+                   render={(props) => <SignIn {...props} loginCallBack={this.loginCallBack} manifest={this.state.manifest} />}
                   />
             <Route exact path="/signup"
-                   component={SignUp} />
+                   render={(props) => <SignUp {...props} manifest={this.state.manifest} />}
+                  />
             <Route path="/dashboard"
-                   render={(props) => <Dashboard {...props} username={this.state.username} adminUser={this.state.adminUser} history={history} />}
+                   render={(props) => <Dashboard {...props} username={this.state.username} adminUser={this.state.adminUser} history={history} manifest={this.state.manifest} />}
                   />
             <Route exact path="/products"
-                  component={Product} />
+                   render={(props) => <Product {...props} manifest={this.state.manifest} />}
+                  />
             <Route path="/products/detail"
-                  component={ProductDetails} />
+                   render={(props) => <ProductDetails {...props} manifest={this.state.manifest} />}
+                  />
             <Route exact path="/shoppingcart"
-                  component={ShoppingCart} />
-            <Route exact path="/shoppingcart/success"
-                  component={ShoppingCartSuccess} />
+                   render={(props) => <ShoppingCart {...props} manifest={this.state.manifest} />}
+                  />
             <Route exact path="/about"
-                  component={About} />
+                   render={(props) => <About {...props} manifest={this.state.manifest} />}
+                  />
             <Route exact path="/contact"
-                  component={Contact} />
+                   render={(props) => <Contact {...props} manifest={this.state.manifest} />}
+                  />
             <Route path="/*">
               <Redirect to="/" />
             </Route>
           </Switch>
-          <Footer/>
+          <Footer manifest={this.state.manifest}/>
         </Router>
       </div>
       );

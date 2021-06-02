@@ -11,10 +11,19 @@ const API_URL = "http://localhost:8080/api/orders/";
 //define order service class
 class OrderService {
 
-    //api call (GET) orders
+    //api call (GET) order headers
     getOrders() {
 
         return axios.get(API_URL + 'headers', {
+            headers: authenticationHeader()
+        });
+
+    }
+
+    //api call (GET) order lines
+    getOrderLines(headerid) {
+
+        return axios.get(API_URL + 'lines/?headerId=' + headerid, {
             headers: authenticationHeader()
         });
 
@@ -57,6 +66,24 @@ class OrderService {
                 return error.response;
 
             });
+    }
+
+    //api call (DELETE) order header and lines, pass userid parameter, and validate access token via header
+    removeOrder(headerId) {
+
+        return axios.delete(API_URL + 'delete/?headerId=' + headerId, {
+            headers: authenticationHeader()
+        });
+
+    }
+
+    //api call (DELETE) order line, pass userid parameter, and validate access token via header
+    removeOrderLine(lineId) {
+
+        return axios.delete(API_URL + 'lines/delete/?lineId=' + lineId, {
+            headers: authenticationHeader()
+        });
+
     }
 
 }

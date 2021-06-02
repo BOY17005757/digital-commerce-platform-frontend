@@ -950,7 +950,7 @@ export default class ShoppingCart extends Component {
         return (
             <div>
               <Helmet>
-                <title>Digital-Commerce | Shopping Cart</title>
+                <title>{`${this.props.manifest.name}`} | Shopping Cart</title>
               </Helmet>
               <div className="relative bg-gray-200 overflow-hidden min-h-screen">
                   <div className="flex justify-center my-12">

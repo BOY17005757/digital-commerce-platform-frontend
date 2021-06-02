@@ -10,18 +10,130 @@ import {Link} from 'react-router-dom';
 import Spinner from "./spinner.component";
 
 import AuthenticationService from "../services/authentication.service";
-import UserService from '../services/user.service';
+import ManifestService from "../services/manifest.service";
 
 //define login class
-export default class DashboardUsers extends Component {
+export default class DashboardSite extends Component {
+
+    //administrator constructor
+    constructor(props) {
+
+        //allow access to props within constructor
+        super(props);
+
+        //assign default state
+        this.state = {
+
+            currentUser: AuthenticationService.getCurrentUser(),
+            manifest: '',
+            redirect: null,
+            loading: false
+
+        };
+
+    }
+
+    componentDidMount() {
+
+        this.setState({
+            manifest: JSON.stringify(this.props.manifest,undefined,2)
+        })
+
+    }
+
+    //handle form entry
+    handleChange(event) {
+
+        this.setState({
+
+            [event.target.id]: event.target.value
+
+        });
+
+    }
+
+    onSubmit(event) {
+
+    //prevent browser refresh after submit
+    event.preventDefault();
+
+    var self = this;
+
+    self.setState({
+
+        message: '',
+        loading: true
+
+    });
+
+    ManifestService.editManifest(JSON.parse(this.state.manifest))
+    .then(function (collection) {
+
+        if (!collection) {
+
+            self.setState({
+
+                showErrorAlert: true,
+                message: collection.data.message
+
+            });
+
+        } else {
+
+            window.location.reload();
+
+        }
+
+    })
+    .catch(function (error) {
+
+        console.error(error);
+
+        self.setState({
+
+            showErrorAlert: true
+
+        });
+
+    })
+    .finally(function () {
+
+        self.setState({
+
+            loading: false
+
+        });
+
+    });
+
+  }
 
     render() {
 
-        
-
         return (
             <div>
-
+                <div className="flex flex-col">
+                <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 mt-8">Site Manifest</h1>
+                <p className="sm:text-xl text-1xl text-center text-red-600 mt-4">Amend the value for <b>"name":</b> to update the site name globally.</p>
+                <form onSubmit={this.onSubmit.bind(this)} className="mt-4">
+                    <div className="p-4">
+                        <textarea id="manifest"
+                                name="manifest"
+                                type="text"
+                                value={this.state.manifest}
+                                onChange={this.handleChange.bind(this)}
+                                className="w-full h-screen p-2 bg-white focus:ring-2 focus:ring-indigo-800 text-gray-900 rounded">
+                        </textarea>
+                    </div>
+                    <div className="flex flex-col mx-auto w-40">
+                        <button
+                            type="submit"
+                            className="group relative w-40 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-5">
+                            Edit
+                        </button>
+                    </div>
+                </form>
+                </div>
             </div>
         );
 

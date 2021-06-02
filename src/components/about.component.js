@@ -14,7 +14,7 @@ export default class About extends Component {
     return (
         <div>
         <Helmet>
-            <title>Digital-Commerce | About</title>
+            <title>{`${this.props.manifest.name}`} | About</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden">
             <section className="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex lg:justify-center">
@@ -28,7 +28,7 @@ export default class About extends Component {
                     </div>
 
                     <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
-                        <h2 className="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">What is the <span className="text-indigo-600 dark:text-indigo-400">digital-commerce-platform?</span></h2>
+                        <h2 className="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">What is <span className="text-indigo-600 dark:text-indigo-400">{this.props.manifest.name}?</span></h2>
                         <p className="mt-4 text-gray-600 dark:text-gray-400">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem modi reprehenderit vitae exercitationem aliquid dolores ullam temporibus enim expedita aperiam mollitia iure consectetur dicta tenetur, porro consequuntur saepe accusantium consequatur.</p>
                         
                         {/* <div className="mt-8">

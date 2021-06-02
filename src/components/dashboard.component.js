@@ -22,6 +22,7 @@ import DashboardEditProduct from "./dashboardeditproduct.component";
 import DashboardProductImageUpload from "./dashboardproductsimageupload.component";
 import DashbordCreateCollection from "./dashboardcreatecollection.component";
 import DashboardSite from "./dashboardsite.component";
+import DashboardOrderLines from "./dashboardorderlines.component";
 
 //import services
 import AuthenticationService from '../services/authentication.service';
@@ -76,6 +77,12 @@ export default class Dashboard extends Component {
 
     }
 
+    if(pathName.includes("/dashboard/orders/lines")) {
+
+      return <DashboardOrderLines />;
+
+    }
+
     switch(pathName) {
       case '/dashboard/users':
         return <DashboardUsers />;
@@ -92,7 +99,7 @@ export default class Dashboard extends Component {
       case '/dashboard/collections/create':
        return <DashbordCreateCollection />;
        case '/dashboard/site':
-        return <DashboardSite />;
+        return <DashboardSite manifest={this.props.manifest} />;
       default:
         return null;
 
@@ -113,7 +120,7 @@ export default class Dashboard extends Component {
     return (
         <div>
           <Helmet>
-                <title>Digital-Commerce | Dashboard</title>
+                <title>{`${this.props.manifest.name}`} | Dashboard</title>
             </Helmet>
             <WelcomeBanner username={this.props.username} />
 

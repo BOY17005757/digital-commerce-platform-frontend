@@ -7,6 +7,8 @@ import "../styles/tailwind.generated.css";
 
 import Moment from 'moment';
 
+import ManifestService from '../services/manifest.service';
+
 //define login className
 export default class Footer extends Component {
 
@@ -19,7 +21,8 @@ export default class Footer extends Component {
     //assign default state
     this.state = {
 
-        currentDate: new Date()
+        currentDate: new Date(),
+        manifest: {}
 
     };
 
@@ -36,9 +39,9 @@ export default class Footer extends Component {
                       src="./logo.png"
                       alt=""
                   />
-                  <span className="ml-3 text-xl">digital-commerce-platform</span>
+                  <span className="ml-3 text-xl">{this.props.manifest.name}</span>
                 </Link>
-                <p className="text-sm text-white sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">&copy; {Moment(this.state.currentDate).format("YYYY")} digital-commerce-platform
+                <p className="text-sm text-white sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">&copy; {Moment(this.state.currentDate).format("YYYY")} {this.props.manifest.name}
                 </p>
             </div>
         </footer>

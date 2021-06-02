@@ -176,7 +176,7 @@ export default class Product extends Component {
 
     return (<div>
         <Helmet>
-            <title>Digital-Commerce | Products</title>
+            <title>{`${this.props.manifest.name}`} | Products</title>
         </Helmet>
         <div className="relative bg-gray-200 overflow-hidden min-h-screen">
         {this.state.showNotification && (
