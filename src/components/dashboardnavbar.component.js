@@ -13,7 +13,8 @@ const navigation = [
     { name: 'User Management', href: '/dashboard/users' },
     { name: 'Product Management', href: '/dashboard/products' },
     { name: 'Order Management', href: '/dashboard/orders' },
-    { name: 'Collection Management', href: '/dashboard/collections' }
+    { name: 'Collection Management', href: '/dashboard/collections' },
+    { name: 'Contact Management', href: '/dashboard/contactmessages' }
 ]
   
 function classNames(...classes) {

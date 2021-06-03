@@ -125,7 +125,7 @@ passwordCheck() {
 
 }
 
-//form submit on register
+//form submit on 
 onSubmit(event) {
 
   //prevent browser refresh after submit

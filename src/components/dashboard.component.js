@@ -23,6 +23,7 @@ import DashboardProductImageUpload from "./dashboardproductsimageupload.componen
 import DashbordCreateCollection from "./dashboardcreatecollection.component";
 import DashboardSite from "./dashboardsite.component";
 import DashboardOrderLines from "./dashboardorderlines.component";
+import DashboardContact from "./dashboardcontact.component";
 
 //import services
 import AuthenticationService from '../services/authentication.service';
@@ -98,8 +99,10 @@ export default class Dashboard extends Component {
         return <DashboardCollections />;
       case '/dashboard/collections/create':
        return <DashbordCreateCollection />;
-       case '/dashboard/site':
+      case '/dashboard/site':
         return <DashboardSite manifest={this.props.manifest} />;
+      case '/dashboard/contactmessages':
+        return <DashboardContact />;
       default:
         return null;
 
