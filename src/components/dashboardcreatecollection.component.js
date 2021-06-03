@@ -152,7 +152,9 @@ export default class DashboardCreateCollection extends Component {
                         autofocus
                         showLeadingZeros={true}
                         required
-                        className="z-40 w-full my-4"
+                        className="w-full my-4 bg-white"
+                        calendarClassName="z-40"
+                        clockClassName="z-40"
                     />
                     </div>
 
@@ -164,7 +166,9 @@ export default class DashboardCreateCollection extends Component {
                         minDate={this.state.dateTimeFrom}
                         showLeadingZeros={true}
                         required
-                        className="z-40 w-full my-4"
+                        className="w-full my-4"
+                        calendarClassName="z-40"
+                        clockClassName="z-40"
                     />
                     </div>
                     <div>
