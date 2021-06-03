@@ -150,7 +150,7 @@ export default class ProductDetail extends Component {
                             </Link>
                         </div>
                 </div>
-                <img alt="ecommerce" className="object-none object-center rounded" src="https://dummyimage.com/400x400"/>
+                <img alt="ecommerce" className="object-contain object-center rounded" src="https://dummyimage.com/400x400"/>
             </div>
         </div>;
 
@@ -226,7 +226,7 @@ export default class ProductDetail extends Component {
         <div className="min-h-screen bg-gray-100">
             <section className="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex lg:justify-center">
             <div className="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg mt-20">
-                <div className="container px-24 py-24 mx-auto">
+                <div className="container lg:p-24 p-10 mx-auto">
                     {this.getProductHtml()}
                 </div>
                 </div>
