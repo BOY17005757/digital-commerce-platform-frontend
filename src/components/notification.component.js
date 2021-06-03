@@ -11,7 +11,7 @@ export default class Notification extends Component {
 
     return (
         <div>
-            <div className="absolute inset-x-0 mx-auto w-72 mt-2">
+            <div className="absolute inset-x-0 mx-auto w-72 mt-2 z-40">
                 <div className="bg-gray-800 rounded-lg border-gray-300 border p-3 shadow-lg">
                 <div className="flex flex-row">
                     <div className="px-2">
