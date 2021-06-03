@@ -851,7 +851,16 @@ export default class ShoppingCart extends Component {
 
       });
 
-      OrderService.createOrder(self.state.currentUser.id,self.state.collection,self.state.delivery,self.state.instructions,self.state.orderType,self.state.firstName,self.state.lastName,self.state.emailAddress,self.state.country,self.state.streetAddress,self.state.city,self.state.county,self.state.postalCode,self.state.total,self.state.products)
+      var collection = self.state.collection;
+      var delivery = self.state.delivery;
+
+      if(self.state.orderType === 'Delivery') {
+        collection = null
+      } else {
+        delivery = null
+      }
+
+      OrderService.createOrder(self.state.currentUser.id,collection,delivery,self.state.instructions,self.state.orderType,self.state.firstName,self.state.lastName,self.state.emailAddress,self.state.country,self.state.streetAddress,self.state.city,self.state.county,self.state.postalCode,self.state.total,self.state.products)
       .then(function (order) {
 
           if (!order) {
