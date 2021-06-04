@@ -28,10 +28,12 @@ export default class Product extends Component {
 
             currentUser: AuthenticationService.getCurrentUser(),
             products: {},
+            filteredProducts: {},
             redirect: null,
             loading: false,
             showNotification: false,
-            notificationCounter: 0
+            notificationCounter: 0,
+            search: ''
 
         };
 
@@ -44,6 +46,25 @@ export default class Product extends Component {
 
         //call get users function
         this.getProducts();
+
+    }
+
+    //handle form entry
+    handleSearch(event) {
+
+        this.setState({
+
+            [event.target.id]: event.target.value
+
+        }, function() {
+
+            this.setState({
+
+                filteredProducts: Object.values(this.state.products).filter(user => user.name.toLowerCase().includes(this.state.search.toLowerCase()))
+    
+            })
+
+        });
 
     }
 
@@ -62,6 +83,7 @@ export default class Product extends Component {
             self.setState({
 
                 products: products.data,
+                filteredProducts: products.data,
                 loading: false
 
             });
@@ -144,8 +166,9 @@ export default class Product extends Component {
     getProductHtml() {
 
         var self = this;
-
-        return Object.entries(self.state.products).map(([key, value]) => {
+        
+        return Object.entries(self.state.filteredProducts)
+                     .map(([key, value]) => {
         
             return <div key={key} className="rounded overflow-hidden shadow-lg bg-white w-5/6 mx-auto my-4">
                 <Link to={'/products/detail/?productId='+ value._id}>
@@ -192,7 +215,13 @@ export default class Product extends Component {
                     </svg>
                 </span>
 
-                <input type="text" className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md" placeholder="Search"/>
+                <input type="text"
+                       id="search"
+                       name="search"
+                       value={this.state.search}
+                       onChange={this.handleSearch.bind(this)}
+                       className="w-full py-3 pl-10 pr-4 border border-gray-300 rounded-md"
+                       placeholder="Search"/>
             </div>
         </section>
 
