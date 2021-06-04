@@ -207,7 +207,7 @@ export default class Product extends Component {
                 <Notification message="Added to Shopping Cart!"/>
             </div>
         )}
-        <section className="relative w-full max-w-md px-5 py-4 rounded-md ml-auto mt-4">
+        <section className="relative w-full max-w-md px-5 pt-4 rounded-md ml-auto mt-4">
             <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                     <svg className="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
@@ -225,7 +225,7 @@ export default class Product extends Component {
             </div>
         </section>
 
-        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+        <div className="p-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
 
         {this.state.loading && (
 
