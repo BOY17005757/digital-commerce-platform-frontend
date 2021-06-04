@@ -114,9 +114,10 @@ export default class DashboardSite extends Component {
             <div>
                 <div className="flex flex-col">
                 <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 mt-8">Site Manifest</h1>
-                <p className="sm:text-xl text-1xl text-center text-red-600 mt-4">Amend the value for <b>"name":</b> to update the site name globally.</p>
+                <p className="text-base text-center text-red-600 mt-4"><b>"name":</b> updates the site name globally.</p>
+                <p className="text-base text-center text-red-600"><b>"short_name":</b> updates the PWA site name globally (displayed when installed).</p>
                 <form onSubmit={this.onSubmit.bind(this)} className="mt-4">
-                    <div className="p-4">
+                    <div className="px-24 py-4">
                         <textarea id="manifest"
                                 name="manifest"
                                 type="text"
