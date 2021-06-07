@@ -172,7 +172,7 @@ export default class Product extends Component {
         
             return <div key={key} className="rounded overflow-hidden shadow-lg bg-white w-5/6 mx-auto my-4">
                 <Link to={'/products/detail/?productId='+ value._id}>
-                    <img className="w-full" src="https://dummyimage.com/200x200" alt="Mountain"/>
+                    <img className="w-full" src={'https://digital-commerce-platform-back.herokuapp.com/api/productimage?productId='+value._id} alt=""/>
                 </Link>
                 <div className="px-6 py-4">
                     <div className="font-bold text-xl mb-2">{value.name}</div>

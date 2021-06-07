@@ -150,7 +150,7 @@ export default class ProductDetail extends Component {
                             </Link>
                         </div>
                 </div>
-                <img alt="ecommerce" className="object-contain object-center rounded" src="https://dummyimage.com/400x400"/>
+                <img alt="" className="object-contain object-center rounded" src={'http://localhost:8080/api/productimage?productId='+this.state.product._id}/>
             </div>
         </div>;
 

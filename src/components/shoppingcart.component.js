@@ -237,7 +237,7 @@ export default class ShoppingCart extends Component {
             return <tr key={key}>
                 <td className="hidden pb-4 md:table-cell">
                 <Link to={'/products/detail/?productId=' + value.productId[0]._id}>
-                    <img src="https://dummyimage.com/200x200" className="w-20 rounded" alt="Thumbnail"/>
+                    <img src={'https://digital-commerce-platform-back.herokuapp.com/api/productimage?productId='+value.productId[0]._id} className="w-20 rounded" alt=""/>
                 </Link>
                 </td>
                 <td>
@@ -288,7 +288,7 @@ export default class ShoppingCart extends Component {
             return <tr key={key}>
                 <td className="hidden pb-4 md:table-cell">
                 <Link to={'/products/detail/?productId=' + value.productId[0]._id}>
-                    <img src="https://dummyimage.com/200x200" className="w-20 rounded" alt="Thumbnail"/>
+                    <img src={'https://digital-commerce-platform-back.herokuapp.com/api/productimage?productId='+value.productId[0]._id} className="w-20 rounded" alt=""/>
                 </Link>
                 </td>
                 <td>
