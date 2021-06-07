@@ -150,7 +150,7 @@ export default class ProductDetail extends Component {
                             </Link>
                         </div>
                 </div>
-                <img alt="" className="object-contain object-center rounded" src={'http://localhost:8080/api/productimage?productId='+this.state.product._id}/>
+                <img alt="" className="object-contain object-center rounded" src={'https://digital-commerce-platform-back.herokuapp.com/api/productimage?productId='+this.state.product._id}/>
             </div>
         </div>;
 
