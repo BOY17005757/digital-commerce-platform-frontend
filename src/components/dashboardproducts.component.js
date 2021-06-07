@@ -106,9 +106,12 @@ export default class DashboardProducts extends Component {
         
             return <tr key={key}>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value._id}</td>
+                    <Link to={'/products/detail/?productId=' + value._id}>
+                        <img src={'https://digital-commerce-platform-back.herokuapp.com/api/productimage?productId='+value._id} className="w-20 rounded p-2" alt=""/>
+                    </Link>
                     <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
-                            <div className="ml-4">
+                            <div className="">
                                 <div className="text-sm font-medium text-gray-800">{value.name}</div>
                                 <div className="text-sm text-gray-500">{value.description}</div>
                             </div>
@@ -177,6 +180,7 @@ export default class DashboardProducts extends Component {
                         <thead className="bg-indigo-200">
                             <tr>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Product ID</th>    
+                                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider"></th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Name</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Status</th>
                                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-black uppercase tracking-wider">Price</th>

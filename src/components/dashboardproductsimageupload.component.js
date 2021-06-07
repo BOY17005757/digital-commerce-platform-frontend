@@ -5,9 +5,12 @@ import "../styles/tailwind.generated.css";
 
 import {Link, Redirect} from 'react-router-dom';
 
+import FormData from 'form-data'
+
 import AuthenticationService from "../services/authentication.service";
 // import UserService from '../services/user.service';
 // import ProductService from '../services/product.service';
+import ProductImageService from "../services/productimage.service";
 
 //define login class
 export default class Login extends Component {
@@ -22,20 +25,86 @@ export default class Login extends Component {
         this.state = {
 
             currentUser: AuthenticationService.getCurrentUser(),
-            redirect: null
+            redirect: null,
+            image: null,
+            urlProductId: null
 
         };
 
     }
 
-//render login component
-render() {
+    componentDidMount() {
+
+      //get product id from url
+      let search = window.location.search;
+      let params = new URLSearchParams(search);
+      let productid = params.get('productId');
+
+      this.setState({
+
+        urlProductId: productid
+
+      })
+
+    }
+
+    //handle form entry
+    handleChange(event) {
+
+        this.setState({
+
+            [event.target.id]: event.target.files[0]
+
+        });
+
+    }
+
+    onSubmit(event) {
+
+        //prevent browser refresh after submit
+        event.preventDefault();
+
+        var self = this;
+
+        var file = self.state.image;
+
+        console.log(file)
+
+        var formData = new FormData();
+        formData.append('image',file)
+
+        console.log(Array.from(formData))
+
+        ProductImageService.uploadProductImage(self.state.urlProductId,formData)
+          .then(function (image) {
+
+            self.setState({
+
+              redirect: '/dashboard/products'
+
+            })
+
+
+          })
+          .catch(function (error) {
+
+              console.error(error);
+
+          });
+
+    }
+
+    //render login component
+    render() {
 
     //handle redirect url
-    if(this.state.redirect) {
+    if (this.state.redirect) {
 
-        return <Redirect to={this.state.redirect} />;
-  
+        return <Redirect to = {
+            this.state.redirect
+        }
+        />;
+
     }
 
     return (
@@ -46,10 +115,15 @@ render() {
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Upload Product Image</h2>
                 </div>
                 <div className="">
-                    <form action="" enctype="multipart/form-data">
-                        <label for="img" className="font-medium mr-4">Select image:</label>
-                        <input type="file" id="img" name="img" accept="image/*"/>
-                        <input type="submit" className="mt-4 p-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700"/>
+                    <form onSubmit={this.onSubmit.bind(this)} encType="multipart/form-data">
+                        <label htmlFor="image" className="font-medium mr-4">Select image:</label>
+                        <input type="file"
+                               id="image"
+                               name="image"
+                            //    value={this.state.image}
+                               onChange={this.handleChange.bind(this)}
+                               accept="image/*"/>
+                        <input type="submit"className="mt-4 p-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700"/>
                     </form>
                 </div>
                 </div>
