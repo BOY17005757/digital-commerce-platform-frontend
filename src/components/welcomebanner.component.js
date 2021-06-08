@@ -28,7 +28,6 @@ export default class WelcomeBanner extends Component {
 
     return (
         <div className="relative bg-indigo-200 p-4 sm:p-6 rounded-sm overflow-hidden z-0">
-
         <div className="absolute right-0 top-0 -mt-4 mr-16 pointer-events-none hidden xl:block" aria-hidden="true">
         <svg width="319" height="198" xmlnsXlink="http://www.w3.org/1999/xlink">
             <defs>
@@ -69,12 +68,10 @@ export default class WelcomeBanner extends Component {
             </g>
         </svg>
         </div>
-
         <div className="relative">
         <h1 className="text-2xl md:text-3xl text-gray-800 font-bold mb-1">{Moment(this.state.currentDate).hour() < 12 ? 'Good morning' : 'Good afternoon' }, {this.props.username}. 👋</h1>
         <p>This administrator dashboard allows you to make changes to your site.</p>
         </div>
-
         </div>
     );
 
