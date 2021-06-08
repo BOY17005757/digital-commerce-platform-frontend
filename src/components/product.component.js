@@ -1,23 +1,22 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import {Link} from 'react-router-dom';
-
 import { Helmet } from "react-helmet";
 
+//import styles
+import "../styles/tailwind.generated.css";
 import Spinner from "./spinner.component";
 import Notification from './notification.component';
 
+//import services
 import AuthenticationService from "../services/authentication.service";
 import ProductService from '../services/product.service';
 import ShoppingCartService from '../services/shoppingcart.service';
 
-//define login class
+//define product class
 export default class Product extends Component {
 
-    //administrator constructor
+    //product constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -37,6 +36,7 @@ export default class Product extends Component {
 
         };
 
+        //bind listener
         this.tick = this.tick.bind(this);
 
     }
@@ -44,12 +44,12 @@ export default class Product extends Component {
     //invoked after component is mounted
     componentDidMount() {
 
-        //call get users function
+        //call get products function
         this.getProducts();
 
     }
 
-    //handle form entry
+    //handle form entry, update filtered products array based on search form entry
     handleSearch(event) {
 
         this.setState({
@@ -94,7 +94,6 @@ export default class Product extends Component {
             self.setState({
 
                 message: "No products found.",
-                // showInvalidPost: true,
                 loading: false
 
             });
@@ -105,7 +104,7 @@ export default class Product extends Component {
 
     }
 
-    //get current date & time
+    //initiate tick for added to shopping cart notification
     tick() {
 
         this.setState({
@@ -114,6 +113,7 @@ export default class Product extends Component {
 
         }, function() {
 
+            //clear interval and hide notification after 5 seconds
             if(this.state.notificationCounter >= 5) {
 
                 this.setState({
@@ -133,6 +133,7 @@ export default class Product extends Component {
         
     }
 
+    //display added to shopping cart notification
     showNotification() {
 
         //set tick interval to 1 second
@@ -144,13 +145,15 @@ export default class Product extends Component {
 
     }
 
+    //add product to users shopping cart
     addToShoppingCart(productId) {
 
         var self = this;
 
-        ShoppingCartService.addShoppingCartProduct(this.state.currentUser.id,productId,1)
+        ShoppingCartService.addShoppingCartProduct(self.state.currentUser.id,productId,1)
         .then(function (product) {
 
+            //call added to shopping cart notification
             self.showNotification();
 
         })
@@ -162,7 +165,7 @@ export default class Product extends Component {
 
     }
 
-    //loop and generate products
+    //loop and generate product html
     getProductHtml() {
 
         var self = this;
@@ -194,7 +197,7 @@ export default class Product extends Component {
 
     }
 
-  //render login component
+  //render product component
   render() {
 
     return (<div>
@@ -214,7 +217,6 @@ export default class Product extends Component {
                         <path d="M21 21L15 15M17 10C17 13.866 13.866 17 10 17C6.13401 17 3 13.866 3 10C3 6.13401 6.13401 3 10 3C13.866 3 17 6.13401 17 10Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
                     </svg>
                 </span>
-
                 <input type="text"
                        id="search"
                        name="search"
@@ -224,17 +226,13 @@ export default class Product extends Component {
                        placeholder="Search"/>
             </div>
         </section>
-
         <div className="p-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-
         {this.state.loading && (
 
             <Spinner />
 
         )}
-
         {this.getProductHtml()}
-
         </div>
         </div>
     </div>

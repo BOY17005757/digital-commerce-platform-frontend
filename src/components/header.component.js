@@ -1,26 +1,19 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import {Link, Redirect} from 'react-router-dom';
-
-import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
-import {
-  ChartBarIcon,
-  MenuIcon,
-  XIcon,
-  ShoppingCartIcon
-} from '@heroicons/react/outline'
-
-import { ChevronDownIcon } from '@heroicons/react/solid'
-
 import Moment from 'moment';
+
+//import styles
+import "../styles/tailwind.generated.css";
+import { Fragment } from 'react';
+import { Popover, Transition } from '@headlessui/react';
+import { ChartBarIcon, MenuIcon, XIcon, ShoppingCartIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 
 //import services
 import AuthenticationService from "../services/authentication.service";
 
+//define products propdown
 const products = [
     {
       name: 'All Products',
@@ -29,17 +22,18 @@ const products = [
       icon: ChartBarIcon,
     },
   ]
-  
+
+//generate class names
 function classNames(...classes) {
 
-    return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ')
 
 }
 
-//define login class
+//define header class
 export default class Header extends Component {
 
-  //topnavbar constructor
+  //header constructor
   constructor(props) {
 
     //allow access to props within constructor
@@ -48,18 +42,18 @@ export default class Header extends Component {
     //assign default state
     this.state = {
 
-        currentDate: new Date(),
-        timestamp: Moment(new Date()).format("HH:mm:ssa"),
-        redirect: null
+      currentDate: new Date(),
+      timestamp: Moment(new Date()).format("HH:mm:ssa"),
+      redirect: null
 
     };
 
-    //bind listeners to functions
-    // this.tick = this.tick.bind(this);
+    //bind listeners
     this.signOut = this.signOut.bind(this);
 
-}
+  }
 
+  //sign out user
   signOut() {
 
     //logout user
@@ -67,18 +61,18 @@ export default class Header extends Component {
 
     this.setState({
 
-        redirect: '/signin'
+      redirect: '/signin'
 
     }, function () {
 
-        //prop callback to update navbar
-        this.props.navCallBack();
+      //prop callback to update navbar
+      this.props.navCallBack();
 
     });
 
   }
 
-  //render login component
+  //render header component
   render() {
 
     //handle redirect url
@@ -86,7 +80,7 @@ export default class Header extends Component {
 
       return <Redirect to={this.state.redirect} />;
 
-  }
+    }
 
     return (
     <Popover className="relative bg-gray-800">
@@ -129,7 +123,6 @@ export default class Header extends Component {
                           aria-hidden="true"
                         />
                       </Popover.Button>
-
                       <Transition
                         show={open}
                         as={Fragment}
@@ -174,7 +167,6 @@ export default class Header extends Component {
                 </Link>
               </Popover.Group>
               <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
-
                 {this.props.adminUser && (
 
                   <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
@@ -182,7 +174,6 @@ export default class Header extends Component {
                   </Link>
 
                 )}
-
                 {!this.props.user && (
                   <Link to="/signin" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400">
                     Sign in
@@ -208,7 +199,6 @@ export default class Header extends Component {
               </div>
             </div>
           </div>
-
           <Transition
             show={open}
             as={Fragment}
@@ -258,14 +248,12 @@ export default class Header extends Component {
                 </div>
                 <div className="py-6 px-5 space-y-6">
                   <div className="grid grid-cols-1 gap-y-4 gap-x-8">
-
                     <Link to="/about" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
                         About
                     </Link>
                     <Link to="/contact" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
                         Contact
-                    </Link>
-                    
+                    </Link>                
                     {this.props.adminUser && (
                     <Link to="/dashboard/users" className="whitespace-nowrap text-base font-medium text-white hover:text-gray-400 hover:bg-gray-900 p-2">
                       Dashboard
@@ -286,7 +274,6 @@ export default class Header extends Component {
                     )}
                   </div>
                   <div>
-                  
                   {!this.props.user && (
                   <Link to="/signup"
                     className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
@@ -302,7 +289,6 @@ export default class Header extends Component {
                     </Link>
                   </p>
                   )}
-
                   </div>
                 </div>
               </div>

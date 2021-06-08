@@ -1,23 +1,22 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import { Redirect } from "react-router-dom";
-
 import {Link} from 'react-router-dom';
 
+//import styles
+import "../styles/tailwind.generated.css";
 import WarningAlert from './warningalert.component';
 import Notification from './notification.component';
 
+//import services
 import AuthenticationService from "../services/authentication.service";
 import ProductService from '../services/product.service';
 import ShoppingCartService from '../services/shoppingcart.service';
 
-//define login class
+//define product detail class
 export default class ProductDetail extends Component {
 
-    //administrator constructor
+    //product detail constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -37,6 +36,7 @@ export default class ProductDetail extends Component {
 
         };
 
+        //bind listener
         this.tick = this.tick.bind(this);
 
     }
@@ -44,13 +44,13 @@ export default class ProductDetail extends Component {
     //invoked after component is mounted
     componentDidMount() {
 
-        //call get users function
+        //call get products function
         this.getProduct();
 
     }
 
     //get active product
-    getProduct(productId) {
+    getProduct() {
 
         var self = this;
 
@@ -58,6 +58,7 @@ export default class ProductDetail extends Component {
             loading: true
         });
 
+        //get productid from query parameter
         let search = window.location.search;
         let params = new URLSearchParams(search);
         let productid = params.get('productId');
@@ -68,60 +69,65 @@ export default class ProductDetail extends Component {
 
         });
 
-        if(productid === '' || productid === null) {
+        //redirect page if query parameter not present
+        if (productid === '' || productid === null) {
 
             self.setState({
+
                 redirect: '/products'
+
             })
 
         }
 
-        ProductService.getProduct(false,productid)
-        .then(function (product) {
+        ProductService.getProduct(false, productid)
+            .then(function (product) {
 
-            self.setState({
+                self.setState({
 
-                product: product.data,
-                loading: false
+                    product: product.data,
+                    loading: false
 
-            });
+                });
 
-        })
-        .catch(function (error) {
+            })
+            .catch(function (error) {
 
-            self.setState({
+                self.setState({
 
-                message: "No product found.",
-                loading: false,
-                redirect: '/products'
+                    message: "No product found.",
+                    loading: false,
+                    redirect: '/products'
 
-            });
+                });
 
-            console.error(error);
+                console.error(error);
 
-        })
+            })
 
     }
 
+    //add product to users shopping cart
     onClick(event) {
 
         var self = this;
 
-        ShoppingCartService.addShoppingCartProduct(this.state.currentUser.id,this.state.urlProductId,1)
-        .then(function (product) {
+        ShoppingCartService.addShoppingCartProduct(this.state.currentUser.id, this.state.urlProductId, 1)
+            .then(function (product) {
 
-            self.showNotification();
+                //call added to shopping cart notification
+                self.showNotification();
 
-        })
-        .catch(function (error) {
+            })
+            .catch(function (error) {
 
-            console.error(error);
+                console.error(error);
 
-        })
+            })
 
     }
 
-    //loop and generate product
+    //loop and generate product html
     getProductHtml() {
 
         return <div className="mx-auto flex flex-wrap">
@@ -167,7 +173,7 @@ export default class ProductDetail extends Component {
 
     }
 
-    //get current date & time
+    //initiate tick for added to shopping cart notification
     tick() {
 
         this.setState({
@@ -176,6 +182,7 @@ export default class ProductDetail extends Component {
 
         }, function() {
 
+            //clear interval and hide notification after 5 seconds
             if(this.state.notificationCounter >= 5) {
 
                 this.setState({
@@ -195,6 +202,7 @@ export default class ProductDetail extends Component {
         
     }
 
+    //display added to shopping cart notification
     showNotification() {
 
         //set tick interval to 1 second
@@ -206,7 +214,7 @@ export default class ProductDetail extends Component {
 
     }
 
-  //render login component
+  //render product detail component
   render() {
 
     //handle redirect url
@@ -234,7 +242,5 @@ export default class ProductDetail extends Component {
         </div>
         </div>
     );
-
   }
-
 }

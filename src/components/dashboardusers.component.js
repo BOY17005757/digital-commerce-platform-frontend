@@ -1,21 +1,22 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import Moment from 'moment';
-
 import {Link} from 'react-router-dom';
 
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import component
 import Spinner from "./spinner.component";
 
+//import services
 import AuthenticationService from "../services/authentication.service";
 import UserService from '../services/user.service';
 
-//define login class
+//define dashboard users class
 export default class DashboardUsers extends Component {
 
-    //administrator constructor
+    //dashboard users constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -108,7 +109,7 @@ export default class DashboardUsers extends Component {
 
     }
 
-    //loop and generate users
+    //loop and generate users html
     getUserHtml() {
 
         var self = this;
@@ -136,7 +137,6 @@ export default class DashboardUsers extends Component {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-800">{value.username}</div>
-                        {/* <div className="text-sm text-gray-500">{person.department}</div> */}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
@@ -166,7 +166,7 @@ export default class DashboardUsers extends Component {
 
     }
 
-    //render login component
+    //render dashboard users component
     render() {
 
         return (
@@ -176,16 +176,13 @@ export default class DashboardUsers extends Component {
                     Create User
                     </Link>
                 </div>
-
                 <div className="flex flex-col">
                 <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">Users</h1>
-
                 {this.state.loading && (
 
                     <Spinner />
 
                 )}
-
                 <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

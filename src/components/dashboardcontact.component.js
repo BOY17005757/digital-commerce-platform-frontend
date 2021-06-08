@@ -1,22 +1,21 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import Moment from 'moment';
 
-import {Link} from 'react-router-dom';
+//import styles
+import "../styles/tailwind.generated.css";
 
+//import component
 import Spinner from "./spinner.component";
 
+//import services
 import AuthenticationService from "../services/authentication.service";
-import UserService from '../services/user.service';
 import ContactService from '../services/contact.service';
 
-//define login class
+//define dashboard contact class
 export default class DashboardContact extends Component {
 
-    //administrator constructor
+    //dashboard contact constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -42,7 +41,7 @@ export default class DashboardContact extends Component {
 
     }
 
-    //get all users
+    //get contact messages
     getContactMessages() {
 
         var self = this;
@@ -98,6 +97,7 @@ export default class DashboardContact extends Component {
         ContactService.removeContactMessage(contactid)
             .then(function (contact) {
 
+                //call contact messages function
                 self.getContactMessages();
 
             })
@@ -109,14 +109,13 @@ export default class DashboardContact extends Component {
 
     }
 
-    //loop and generate contact messages
+    //loop and generate contact messages html
     getContactHtml() {
 
         var self = this;
 
         return Object.entries(self.state.contactMessages).map(([key, value]) => {
 
-        
             return <tr key={key}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value._id}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 font-medium">{value.userId ? value.userId[0].username : null}</td>

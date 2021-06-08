@@ -1,197 +1,178 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
-import { LockClosedIcon } from '@heroicons/react/solid';
-
 import ErrorAlert from "./erroralert.component";
-
 import {Link} from 'react-router-dom';
-
 import { Redirect } from "react-router-dom";
+
+//import styles
+import "../styles/tailwind.generated.css";
 
 //import service
 import AuthenticationService from '../services/authentication.service';
 
-//define login class
-export default class Login extends Component {
+//define dashboard create user class
+export default class DashboardCreateUser extends Component {
 
     //register constructor
-  constructor(props) {
+    constructor(props) {
 
-    //allow access to props within constructor
-    super(props);
+        //allow access to props within constructor
+        super(props);
 
-    //assign default state
-    this.state = {
+        //assign default state
+        this.state = {
 
-        firstName: '',
-        lastName:'',
-        emailAddress: '',
-        username: '',
-        password: '',
-        loading: false,
-        // showInvalidCredMessage: false,
-        showErrorAlert: false,
-        message: '',
-        currentUser: AuthenticationService.getCurrentUser(),
-        passwordConfirm: '',
-        redirect: null
-
-    };
-
-  }
-
-  //invoked after component is mounted
-  componentDidMount() {
-
-    // if(!this.props.adminUser) {
-
-    //   this.setState({
-
-    //     redirect: '/'
-
-    //   });
-
-    // }
-
-  }
-
-  //handle form entry
-  handleChange(event) {
-
-      this.setState({
-
-          [event.target.id]: event.target.value
-
-      }, function() {
-
-        if(event.target.id === "passwordConfirm") {
-
-          this.passwordCheck();
-    
-        }
-
-      });
-
-  }
-
-//validate password
-passwordCheck() {
-
-  var self = this;
-
-  if (self.state.password.length >= 10) {
-
-      if (self.state.password === self.state.passwordConfirm) {
-
-          self.setState({
-
+            firstName: '',
+            lastName: '',
+            emailAddress: '',
+            username: '',
+            password: '',
+            loading: false,
+            // showInvalidCredMessage: false,
             showErrorAlert: false,
-            message: null
+            message: '',
+            currentUser: AuthenticationService.getCurrentUser(),
+            passwordConfirm: '',
+            redirect: null
 
-          });
-
-          return true;
-
-      } else {
-
-          self.setState({
-
-              showErrorAlert: true,
-              message: "Passwords do not match.",
-              loading: false
-
-          });
-
-          return false;
-
-      }
-
-  } else {
-
-      self.setState({
-
-          showErrorAlert: true,
-          message: "Password must be more than 10 characters.",
-          loading: false
-
-      });
-
-      return false;
-
-  }
-
-}
-
-//form submit on 
-onSubmit(event) {
-
-  //prevent browser refresh after submit
-  event.preventDefault();
-
-  var self = this;
-
-  this.setState({
-
-      message: '',
-      loading: true
-
-  });
-
-  if (this.passwordCheck()) {
-
-      AuthenticationService.signUp(this.state.firstName, this.state.lastName, this.state.username, this.state.emailAddress, this.state.password)
-          .then(function (user) {
-
-              if (!user.username) {
-
-                  self.setState({
-
-                      showErrorAlert: true,
-                      message: user.data.message
-
-                  });
-
-              } else {
-
-                  self.setState({
-
-                      showErrorAlert: false,
-                      redirect: '/dashboard/users'
-
-                  });
-
-              }
-
-          })
-          .catch(function (error) {
-
-              console.error(error);
-
-              self.setState({
-
-                  showErrorAlert: true
-
-              });
-
-          })
-          .finally(function () {
-
-              self.setState({
-
-                  loading: false
-
-              });
-
-          });
+        };
 
     }
 
-  }
+    //handle form entry, validate password
+    handleChange(event) {
 
-  //render login component
+        this.setState({
+
+            [event.target.id]: event.target.value
+
+        }, function () {
+
+            if (event.target.id === "passwordConfirm") {
+
+                this.passwordCheck();
+
+            }
+
+        });
+
+    }
+
+    //validate password
+    passwordCheck() {
+
+        var self = this;
+
+        if (self.state.password.length >= 10) {
+
+            if (self.state.password === self.state.passwordConfirm) {
+
+                self.setState({
+
+                    showErrorAlert: false,
+                    message: null
+
+                });
+
+                return true;
+
+            } else {
+
+                self.setState({
+
+                    showErrorAlert: true,
+                    message: "Passwords do not match.",
+                    loading: false
+
+                });
+
+                return false;
+
+            }
+
+        } else {
+
+            self.setState({
+
+                showErrorAlert: true,
+                message: "Password must be more than 10 characters.",
+                loading: false
+
+            });
+
+            return false;
+
+        }
+
+    }
+
+    //form submit on create user
+    onSubmit(event) {
+
+        //prevent browser refresh after submit
+        event.preventDefault();
+
+        var self = this;
+
+        self.setState({
+
+            message: '',
+            loading: true
+
+        });
+
+        if (self.passwordCheck()) {
+
+            AuthenticationService.signUp(self.state.firstName, self.state.lastName, self.state.username, self.state.emailAddress, self.state.password)
+                .then(function (user) {
+
+                    if (!user.username) {
+
+                        self.setState({
+
+                            showErrorAlert: true,
+                            message: user.data.message
+
+                        });
+
+                    } else {
+
+                        self.setState({
+
+                            showErrorAlert: false,
+                            redirect: '/dashboard/users'
+
+                        });
+
+                    }
+
+                })
+                .catch(function (error) {
+
+                    console.error(error);
+
+                    self.setState({
+
+                        showErrorAlert: true
+
+                    });
+
+                })
+                .finally(function () {
+
+                    self.setState({
+
+                        loading: false
+
+                    });
+
+                });
+
+        }
+
+    }
+
+  //render dashboard create user component
   render() {
 
     //handle redirect url
@@ -208,7 +189,6 @@ onSubmit(event) {
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create User</h2>
                 </div>
-
                 <form onSubmit={this.onSubmit.bind(this)} className="mt-8 space-y-6">
                     <input type="hidden" name="remember" defaultValue="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
@@ -310,13 +290,11 @@ onSubmit(event) {
                         />
                     </div>
                     </div>
-
                     {this.state.showErrorAlert && (
 
                         <ErrorAlert message={this.state.message} />
 
                     )}
-
                     <div>
                         <button
                             type="submit"

@@ -1,14 +1,14 @@
 //import packages
 import React, { Component } from 'react';
 
+//import styles
+import "../styles/tailwind.generated.css";
 import { Ring } from 'react-awesome-spinners';
 
-import "../styles/tailwind.generated.css";
-
-//define login class
+//define spinner class
 export default class Spinner extends Component {
 
-  //render login component
+  //render spinner component
   render() {
 
     return (
@@ -17,6 +17,6 @@ export default class Spinner extends Component {
       </div>
     );
 
-    }
+  }
 
 }

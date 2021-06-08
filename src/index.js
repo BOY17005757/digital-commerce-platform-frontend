@@ -6,7 +6,7 @@ import { createBrowserHistory } from "history";
 import { Helmet } from "react-helmet";
 import { isExpired } from "react-jwt";
 
-//import css
+//import styles
 import "./styles/tailwind.generated.css";
 
 //import components
@@ -30,6 +30,7 @@ import ManifestService from "./services/manifest.service";
 //import service worker
 import * as serviceWorker from './serviceWorkerRegistration';
 
+//define browser history variable
 const history = createBrowserHistory();
 
 //define body class
@@ -77,9 +78,10 @@ export default class Body extends Component {
       //invoked after component is mounted
       componentDidMount() {
 
-            //call handle user function
+            //call manifest function
             this.getManifest();
 
+            //call handle user function
             this.handleUser();
 
       }
@@ -121,9 +123,6 @@ export default class Body extends Component {
 
       //get current user and check if administrator
       handleUser() {
-
-            //call check online function
-            // this.checkOnline();
 
             var self = this;
 

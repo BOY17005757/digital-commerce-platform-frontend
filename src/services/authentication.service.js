@@ -5,7 +5,7 @@ import axios from "axios";
 import authenticationHeader from './authentication-header';
 
 //set api url based on production or development build
- const API_URL = process.env.NODE_ENV === 'production' ? ("https://digital-commerce-platform-back.herokuapp.com/api/authentication/") : "http://localhost:8080/api/authentication/";
+const API_URL = process.env.NODE_ENV === 'production' ? ("https://digital-commerce-platform-back.herokuapp.com/api/authentication/") : "http://localhost:8080/api/authentication/";
 
 //define authentication service class
 class AuthenticationService {
@@ -44,7 +44,7 @@ class AuthenticationService {
 
     }
 
-    ///api call (POST) signUp, pass username/emailAddress/password via body
+    //api call (POST) signUp, pass username/emailAddress/password via body
     signUp(firstName, lastName, username, emailAddress, password) {
         return axios.post(API_URL + "signup", {
                 firstName,

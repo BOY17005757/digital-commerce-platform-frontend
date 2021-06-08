@@ -7,7 +7,7 @@ import authenticationHeader from './authentication-header';
 //set api url based on production or development build
 const API_URL = process.env.NODE_ENV === 'production' ? ("https://digital-commerce-platform-back.herokuapp.com/api/shoppingcart/") : "http://localhost:8080/api/shoppingcart/";
 
-//define product service class
+//define shopping cart service class
 class ShoppingCart {
 
     //api call (GET) shopping cart product
@@ -19,7 +19,7 @@ class ShoppingCart {
 
     }
 
-    //api call (POST) new shopping cart product, validate access token via header, and pass userid/content via body
+    //api call (POST) new shopping cart product, validate access token via header, and pass content via body
     addShoppingCartProduct(userid, productid, quantity) {
 
         return axios({
@@ -46,7 +46,7 @@ class ShoppingCart {
             });
     }
 
-    //api call (POST) decrement shopping cart product, validate access token via header, and pass userid/content via body
+    //api call (POST) decrement shopping cart product, validate access token via header, and pass content via body
     decrementShoppingCartProduct(userid, productid, quantity) {
 
         return axios({

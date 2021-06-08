@@ -10,7 +10,7 @@ const API_URL = process.env.NODE_ENV === 'production' ? ("https://digital-commer
 //define order service class
 class OrderService {
 
-    //api call (GET) order headers
+    //api call (GET) order headers, validate access token via header,
     getOrders() {
 
         return axios.get(API_URL + 'headers', {
@@ -19,7 +19,7 @@ class OrderService {
 
     }
 
-    //api call (GET) order lines
+    //api call (GET) order lines, validate access token via header,
     getOrderLines(headerid) {
 
         return axios.get(API_URL + 'lines/?headerId=' + headerid, {
@@ -28,7 +28,7 @@ class OrderService {
 
     }
 
-    //api call (POST) create order, validate access token via header, and pass userid/content via body
+    //api call (POST) create order, validate access token via header, and pass content via body
     createOrder(userid,collectionid,delivery,instructions,type,firstname,lastname,emailaddress,country,streetaddress,city,county,postalcode,total,products) {
 
         return axios({
@@ -67,7 +67,7 @@ class OrderService {
             });
     }
 
-    //api call (DELETE) order header and lines, pass userid parameter, and validate access token via header
+    //api call (DELETE) order header and lines, pass headerid parameter, and validate access token via header
     removeOrder(headerId) {
 
         return axios.delete(API_URL + 'delete/?headerId=' + headerId, {
@@ -76,7 +76,7 @@ class OrderService {
 
     }
 
-    //api call (DELETE) order line, pass userid parameter, and validate access token via header
+    //api call (DELETE) order line, pass lineid parameter, and validate access token via header
     removeOrderLine(lineId) {
 
         return axios.delete(API_URL + 'lines/delete/?lineId=' + lineId, {

@@ -1,14 +1,14 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import Moment from 'moment';
 
-//define login class
-export default class Login extends Component {
+//import styles
+import "../styles/tailwind.generated.css";
 
-    //topnavbar constructor
+//define welcome banner class
+export default class WelcomeBanner extends Component {
+
+    //welcome banner constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -23,7 +23,7 @@ export default class Login extends Component {
 
     }
 
-  //render login component
+  //render welcome banner component
   render() {
 
     return (

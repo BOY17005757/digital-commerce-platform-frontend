@@ -19,7 +19,7 @@ class ContactService {
 
     }
 
-    //api call (POST) new contact message, validate access token via header, and pass userid/content via body
+    //api call (POST) new contact message, validate access token via header, and pass content via body
     createContactMessage(name,emailAddress,message,userId) {
 
         return axios({
@@ -47,7 +47,7 @@ class ContactService {
                 });
     }
 
-     //api call (DELETE) contact message, pass userid parameter, and validate access token via header
+     //api call (DELETE) contact message, pass contactid parameter, and validate access token via header
      removeContactMessage(contactid) {
 
         return axios.delete(API_URL + 'remove/?contactId=' + contactid, {

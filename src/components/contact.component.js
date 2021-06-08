@@ -1,19 +1,21 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import { Helmet } from "react-helmet";
 
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import component
 import Notification from './notification.component';
 
+//import services
 import AuthenticationService from '../services/authentication.service';
 import ContactService from '../services/contact.service';
 
-//define login class
+//define contact class
 export default class Contact extends Component {
 
-    //register constructor
+    //contact constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -33,6 +35,7 @@ export default class Contact extends Component {
 
         };
 
+        //bind listener
         this.tick = this.tick.bind(this);
 
     }
@@ -48,7 +51,7 @@ export default class Contact extends Component {
 
     }
 
-    //form submit on 
+    //form submit on contact message create
     onSubmit(event) {
 
         //prevent browser refresh after submit
@@ -63,7 +66,7 @@ export default class Contact extends Component {
 
         });
 
-        var userid = !self.state.currentUser ? null : this.state.currentUser.id;
+        var userid = !self.state.currentUser ? null : self.state.currentUser.id;
 
         ContactService.createContactMessage(self.state.name, self.state.emailAddress, self.state.message, userid)
             .then(function (contact) {
@@ -102,7 +105,7 @@ export default class Contact extends Component {
 
     }
 
-    //get current date & time
+    //initiate tick for message sent notification
     tick() {
 
         this.setState({
@@ -130,6 +133,7 @@ export default class Contact extends Component {
 
     }
 
+    //display message sent notification
     showNotification() {
 
         //set tick interval to 1 second
@@ -141,7 +145,7 @@ export default class Contact extends Component {
 
     }
 
-  //render login component
+  //render contact component
   render() {
 
     return (
@@ -195,7 +199,6 @@ export default class Contact extends Component {
                                     onChange={this.handleChange.bind(this)}
                                     className="w-full rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"></textarea>
                         </div>
-                    
                         <div className="p-2 w-full">
                         <button className="flex mx-auto text-white bg-indigo-600 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-700 rounded text-lg my-6">Submit</button>
                         </div>
@@ -206,14 +209,12 @@ export default class Contact extends Component {
                                 </svg>
                                 <span className="mt-2 text-center">Unit 6, The Burghley Centre, Hereward St, Bourne, PE10 9EG</span>
                             </p>
-
                             <p className="flex flex-col items-center px-4 py-3 text-gray-700 rounded-md dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-blue-500">
                                 <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
                                 </svg>
                                 <span className="mt-2">+441778 425880</span>
                             </p>
-
                             <p className="flex flex-col items-center px-4 py-3 text-gray-700 rounded-md dark:text-gray-200 hover:bg-blue-200 dark:hover:bg-blue-500">
                                 <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
@@ -223,7 +224,6 @@ export default class Contact extends Component {
                             </p>
                         </div>
                         </div>
-
                     </div>
                     </div>
                 </form>

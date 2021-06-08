@@ -1,23 +1,23 @@
 //import packages
 import React, { Component } from 'react';
-
-import { LockClosedIcon } from '@heroicons/react/solid';
-import "../styles/tailwind.generated.css";
-
 import {Link} from 'react-router-dom';
 import { Helmet } from "react-helmet";
-
-import ErrorAlert from "./erroralert.component";
-
 import {Redirect} from 'react-router-dom';
+
+//import styles
+import "../styles/tailwind.generated.css";
+import { LockClosedIcon } from '@heroicons/react/solid';
+
+//import component
+import ErrorAlert from "./erroralert.component";
 
 //import service
 import AuthenticationService from '../services/authentication.service';
 
-//define login class
+//define sign in class
 export default class SignIn extends Component {
 
-  //login constructor
+  //sign in constructor
   constructor(props) {
 
     //allow access to props within constructor
@@ -74,14 +74,14 @@ export default class SignIn extends Component {
 
     var self = this;
 
-    this.setState({
+    self.setState({
 
       message: '',
       loading: true
 
     });
 
-    AuthenticationService.signIn(this.state.emailAddress, this.state.password)
+    AuthenticationService.signIn(self.state.emailAddress, self.state.password)
       .then(function (user) {
 
         if (!user.emailAddress) {
@@ -130,25 +130,26 @@ export default class SignIn extends Component {
 
   }
 
-  //render login component
+  //render sign in component
   render() {
 
     //handle redirect url
-    if(this.state.redirect) {
+    if (this.state.redirect) {
 
-      return <Redirect to={this.state.redirect} />;
+      return <Redirect to = {
+        this.state.redirect
+      }
+      />;
 
     }
 
     return (
       <div>
       <Helmet>
-            <title>{`${this.props.manifest.name}`} | Sign in to your Account</title>
+        <title>{`${this.props.manifest.name}`} | Sign in to your Account</title>
       </Helmet>
       <div className="min-h-screen flex items-center justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
-        
         <div className="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg py-16 px-20">
-
         <div className="max-w-md w-full space-y-8">
           <div>
             <img
@@ -158,8 +159,6 @@ export default class SignIn extends Component {
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
           </div>
-
-          {/* <form className="mt-8 space-y-6" action="#" method="POST"> */}
           <form onSubmit={this.onSubmit.bind(this)} className="mt-8 space-y-6">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
@@ -197,13 +196,11 @@ export default class SignIn extends Component {
                 />
               </div>
             </div>
-
             {this.state.showErrorAlert && (
 
               <ErrorAlert message={this.state.message} />
 
             )}
-
             <div className="flex items-center justify-between">
               <div className="text-sm">
                 <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
@@ -211,7 +208,6 @@ export default class SignIn extends Component {
                 </Link>
               </div>
             </div>
-
             <div>
               <button
                 type="submit"

@@ -1,21 +1,22 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import Moment from 'moment';
-
 import {Link} from 'react-router-dom';
 
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import component
 import Spinner from "./spinner.component";
 
+//import services
 import AuthenticationService from "../services/authentication.service";
 import OrderService from '../services/order.service';
 
 //define dashboard orders class
 export default class DashboardOrders extends Component {
 
-    //administrator constructor
+    //dashboard orders constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -36,7 +37,7 @@ export default class DashboardOrders extends Component {
     //invoked after component is mounted
     componentDidMount() {
 
-        //call get users function
+        //call get orders function
         this.getOrders();
 
     }
@@ -110,7 +111,7 @@ export default class DashboardOrders extends Component {
 
     }
 
-    //loop and generate orders
+    //loop and generate order html
     getOrderHtml() {
 
         var self = this;
@@ -162,26 +163,18 @@ export default class DashboardOrders extends Component {
 
     }
 
-    //render login component
+    //render dashboard orders component
     render() {
 
         return (
             <div>
-                {/* <div className="flex flex-col mx-auto w-40 mt-4">
-                    <Link to="/dashboard/users/create" className="m-4 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base text-white bg-indigo-600 hover:bg-indigo-700">
-                    Create User
-                    </Link>
-                </div> */}
-
                 <div className="flex flex-col">
                 <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">Order Headers</h1>
-
                 {this.state.loading && (
 
                     <Spinner />
 
                 )}
-
                 <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

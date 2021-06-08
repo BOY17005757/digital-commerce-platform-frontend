@@ -18,28 +18,27 @@ class ProductImageService {
 
   }
 
-  //api call (POST) upload product image, validate access token via header, and pass userid/content via body
+  //api call (POST) upload product image, validate access token via header, and pass content via body
   uploadProductImage(productid,image) {
 
     return axios({
-            method: 'POST',
-            url: API_URL + 'upload?productId=' + productid,
-            headers: { 'content-type': 'multipart/form-data' },// authenticationHeader(),
-            // { 'content-type': 'multipart/form-data' },
-            data: image
-            })
-            .then(function (response) {
+      method: 'POST',
+      url: API_URL + 'upload?productId=' + productid,
+      headers: authenticationHeader(),
+      data: image
+      })
+      .then(function (response) {
 
-                return response.data;
+          return response.data;
 
-            })
-            .catch(function (error) {
+      })
+      .catch(function (error) {
 
-                console.error(error);
+          console.error(error);
 
-                return error.response;
+          return error.response;
 
-            });
+      });
 }
 
 }

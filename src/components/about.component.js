@@ -1,14 +1,14 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import { Helmet } from "react-helmet";
 
-//define login class
+//import styles
+import "../styles/tailwind.generated.css";
+
+//define about class
 export default class About extends Component {
 
-  //render login component
+  //render about component
   render() {
 
     return (
@@ -26,18 +26,12 @@ export default class About extends Component {
                             alt=""
                             />
                     </div>
-
                     <div className="max-w-xl px-6 py-12 lg:max-w-5xl lg:w-1/2">
                         <h2 className="text-2xl font-bold text-gray-800 dark:text-white md:text-3xl">What is <span className="text-indigo-600 dark:text-indigo-400">{this.props.manifest.name}?</span></h2>
                         <p className="mt-4 text-gray-600 dark:text-gray-400">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem modi reprehenderit vitae exercitationem aliquid dolores ullam temporibus enim expedita aperiam mollitia iure consectetur dicta tenetur, porro consequuntur saepe accusantium consequatur.</p>
-                        
-                        {/* <div className="mt-8">
-                            <a href="#" className="px-5 py-2 font-semibold text-gray-100 transition-colors duration-200 transform bg-gray-900 rounded-md hover:bg-gray-700">Start Now</a>
-                        </div> */}
                     </div>
                 </div>
             </section>
-
             <section className="bg-gray-100 dark:bg-gray-900 lg:py-12 lg:flex lg:justify-center">
                 <div className="bg-white dark:bg-gray-800 lg:mx-8 lg:flex lg:max-w-5xl lg:shadow-lg lg:rounded-lg py-8 px-6">
                 <div className="xl:w-1/2 lg:w-3/4 w-full mx-auto text-center">

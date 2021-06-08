@@ -1,16 +1,16 @@
 //import packages
 import React, { Component } from 'react';
 
+//import styles
 import "../styles/tailwind.generated.css";
 
-//define login class
-export default class ErrorAlert extends Component {
+//define success alert class
+export default class SuccessAlert extends Component {
 
-  //render login component
+  //render success alert component
   render() {
 
     return (
-
       <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
       <div class="flex items-center justify-center w-12 bg-green-500">
           <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
@@ -25,7 +25,6 @@ export default class ErrorAlert extends Component {
           </div>
       </div>
       </div>
-
     );
 
   }

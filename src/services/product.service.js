@@ -27,10 +27,8 @@ class ProductService {
 
     }
 
-    //api call (POST) new product, validate access token via header, and pass userid/content via body
+    //api call (POST) new product, validate access token via header, and pass content via body
     createProduct(name,description,price,status) {
-
-        //TODO: check for administrator role
 
         return axios({
                 method: 'POST',
@@ -57,7 +55,7 @@ class ProductService {
                 });
     }
 
-     //api call (DELETE) product, pass userid parameter, and validate access token via header
+     //api call (DELETE) product, pass productid parameter, and validate access token via header
      removeProduct(productId) {
 
         return axios.delete(API_URL + 'remove/?productId=' + productId, {
@@ -66,7 +64,7 @@ class ProductService {
 
     }
 
-    //api call (POST) edit product, validate access token via header, and pass  via body
+    //api call (POST) edit product, validate access token via header, and pass content via body
     editProduct(productid, name, description, price, status) {
 
         return axios({

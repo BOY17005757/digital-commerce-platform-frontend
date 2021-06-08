@@ -1,22 +1,22 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import Moment from 'moment';
-
 import {Link} from 'react-router-dom';
 
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import component
 import Spinner from "./spinner.component";
 
+//import services
 import AuthenticationService from "../services/authentication.service";
-// import UserService from '../services/user.service';
 import ProductService from '../services/product.service';
 
-//define login class
+//define dashboard products class
 export default class DashboardProducts extends Component {
 
-    //administrator constructor
+    //dashboard products constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -37,7 +37,7 @@ export default class DashboardProducts extends Component {
     //invoked after component is mounted
     componentDidMount() {
 
-        //call get users function
+        //call get products function
         this.getProducts();
 
     }
@@ -67,7 +67,6 @@ export default class DashboardProducts extends Component {
             self.setState({
 
                 message: "No products found.",
-                // showInvalidPost: true,
                 loading: false
 
             });
@@ -97,7 +96,7 @@ export default class DashboardProducts extends Component {
 
     }
 
-    //loop and generate products
+    //loop and generate product html
     getProductHtml() {
 
         var self = this;
@@ -153,7 +152,7 @@ export default class DashboardProducts extends Component {
 
     }
 
-    //render login component
+    //render dashboard products component
     render() {
 
         return (
@@ -163,16 +162,13 @@ export default class DashboardProducts extends Component {
                         Create Product
                     </Link>
                 </div>
-
                 <div className="flex flex-col">
                 <h1 className="sm:text-3xl text-2xl font-medium title-font text-center text-gray-900 my-4">Products</h1>
-
                 {this.state.loading && (
 
                     <Spinner />
 
                 )}
-
                 <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

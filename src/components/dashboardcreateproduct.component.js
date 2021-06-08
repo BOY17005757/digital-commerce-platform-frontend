@@ -1,141 +1,121 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
-import { LockClosedIcon } from '@heroicons/react/solid';
-
-import ErrorAlert from "./erroralert.component";
-
 import {Link} from 'react-router-dom';
-
 import { Redirect } from "react-router-dom";
 
-//import service
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import component
+import ErrorAlert from "./erroralert.component";
+
+//import services
 import AuthenticationService from '../services/authentication.service';
 import ProductService from '../services/product.service';
 
-
-//define login class
+//define dashboard create product class
 export default class DashboardCreateProduct extends Component {
 
-    //register constructor
-  constructor(props) {
+    //dashboard create product constructor
+    constructor(props) {
 
-    //allow access to props within constructor
-    super(props);
+        //allow access to props within constructor
+        super(props);
 
-    //assign default state
-    this.state = {
-        name: '',
-        description: '',
-        price: '',
-        status: 'Active',
-        loading: false,
-        showErrorAlert: false,
-        message: '',
-        currentUser: AuthenticationService.getCurrentUser(),
-        redirect: null
+        //assign default state
+        this.state = {
+            name: '',
+            description: '',
+            price: '',
+            status: 'Active',
+            loading: false,
+            showErrorAlert: false,
+            message: '',
+            currentUser: AuthenticationService.getCurrentUser(),
+            redirect: null
 
-    };
+        };
 
-  }
+    }
 
-  //invoked after component is mounted
-  componentDidMount() {
+    //handle form entry
+    handleChange(event) {
 
-    // if(!this.props.adminUser) {
+        this.setState({
 
-    //   this.setState({
-
-    //     redirect: '/'
-
-    //   });
-
-    // }
-
-  }
-
-  //handle form entry
-  handleChange(event) {
-
-    console.log(event.target.value);
-
-      this.setState({
-
-          [event.target.id]: event.target.value
-
-      });
-
-  }
-
-//form submit on register
-onSubmit(event) {
-
-    //prevent browser refresh after submit
-    event.preventDefault();
-
-    var self = this;
-
-    self.setState({
-
-        message: '',
-        loading: true
-
-    });
-
-    var boolStatus;
-
-    this.state.status === 'Active' ? boolStatus = true : boolStatus = false;
-
-    ProductService.createProduct(this.state.name, this.state.description, this.state.price, boolStatus)
-    .then(function (product) {
-
-        if (!product) {
-
-            self.setState({
-
-                showErrorAlert: true,
-                message: product.data.message
-
-            });
-
-        } else {
-
-            self.setState({
-
-                showErrorAlert: false,
-                redirect: '/dashboard/products'
-
-            });
-
-        }
-
-    })
-    .catch(function (error) {
-
-        console.error(error);
-
-        self.setState({
-
-            showErrorAlert: true
+            [event.target.id]: event.target.value
 
         });
 
-    })
-    .finally(function () {
+    }
+
+    //form submit on create product
+    onSubmit(event) {
+
+        //prevent browser refresh after submit
+        event.preventDefault();
+
+        var self = this;
 
         self.setState({
 
-            loading: false
+            message: '',
+            loading: true
 
         });
 
-    });
+        var boolStatus;
 
-  }
+        self.state.status === 'Active' ? boolStatus = true : boolStatus = false;
 
-  //render login component
+        ProductService.createProduct(self.state.name, self.state.description, self.state.price, boolStatus)
+            .then(function (product) {
+
+                if (!product) {
+
+                    self.setState({
+
+                        showErrorAlert: true,
+                        message: product.data.message
+
+                    });
+
+                } else {
+
+                    self.setState({
+
+                        showErrorAlert: false,
+                        redirect: '/dashboard/products'
+
+                    });
+
+                }
+
+            })
+            .catch(function (error) {
+
+                console.error(error);
+
+                self.setState({
+
+                    showErrorAlert: true
+
+                });
+
+            })
+            .finally(function () {
+
+                self.setState({
+
+                    loading: false
+
+                });
+
+            });
+
+    }
+
+  //render dashboard create product component
   render() {
 
     //handle redirect url

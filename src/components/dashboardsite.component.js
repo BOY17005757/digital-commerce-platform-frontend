@@ -1,21 +1,17 @@
 //import packages
 import React, { Component } from 'react';
 
+//import styles
 import "../styles/tailwind.generated.css";
 
-import Moment from 'moment';
-
-import {Link} from 'react-router-dom';
-
-import Spinner from "./spinner.component";
-
+//import services
 import AuthenticationService from "../services/authentication.service";
 import ManifestService from "../services/manifest.service";
 
-//define login class
+//define dashboard site class
 export default class DashboardSite extends Component {
 
-    //administrator constructor
+    //dashboard site constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -33,10 +29,14 @@ export default class DashboardSite extends Component {
 
     }
 
+    //invoked after component is mounted
     componentDidMount() {
 
+        //set manifest from prop, convert json to string and format
         this.setState({
-            manifest: JSON.stringify(this.props.manifest,undefined,2)
+
+            manifest: JSON.stringify(this.props.manifest, undefined, 2)
+
         })
 
     }
@@ -52,62 +52,64 @@ export default class DashboardSite extends Component {
 
     }
 
+    //update manifest
     onSubmit(event) {
 
-    //prevent browser refresh after submit
-    event.preventDefault();
+        //prevent browser refresh after submit
+        event.preventDefault();
 
-    var self = this;
+        var self = this;
 
-    self.setState({
+        self.setState({
 
-        message: '',
-        loading: true
+            message: '',
+            loading: true
 
-    });
+        });
 
-    ManifestService.editManifest(JSON.parse(this.state.manifest))
-    .then(function (collection) {
+        ManifestService.editManifest(JSON.parse(self.state.manifest))
+            .then(function (collection) {
 
-        if (!collection) {
+                if (!collection) {
 
-            self.setState({
+                    self.setState({
 
-                showErrorAlert: true,
-                message: collection.data.message
+                        showErrorAlert: true,
+                        message: collection.data.message
+
+                    });
+
+                } else {
+
+                    window.location.reload();
+
+                }
+
+            })
+            .catch(function (error) {
+
+                console.error(error);
+
+                self.setState({
+
+                    showErrorAlert: true
+
+                });
+
+            })
+            .finally(function () {
+
+                self.setState({
+
+                    loading: false
+
+                });
 
             });
 
-        } else {
+    }
 
-            window.location.reload();
-
-        }
-
-    })
-    .catch(function (error) {
-
-        console.error(error);
-
-        self.setState({
-
-            showErrorAlert: true
-
-        });
-
-    })
-    .finally(function () {
-
-        self.setState({
-
-            loading: false
-
-        });
-
-    });
-
-  }
-
+    //render dashboard site component
     render() {
 
         return (

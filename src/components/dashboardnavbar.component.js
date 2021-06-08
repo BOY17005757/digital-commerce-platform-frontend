@@ -1,13 +1,13 @@
 //import packages
 import React, { Component } from 'react';
+import { Redirect, Link } from "react-router-dom";
 
+//import styles
 import "../styles/tailwind.generated.css";
-
 import { Disclosure } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
 
-import { Redirect, Link } from "react-router-dom";
-
+//define navbar menu items
 const navigation = [
     { name: 'Site Management', href: '/dashboard/site' },
     { name: 'User Management', href: '/dashboard/users' },
@@ -17,14 +17,17 @@ const navigation = [
     { name: 'Contact Management', href: '/dashboard/contactmessages' }
 ]
   
+//generate class name
 function classNames(...classes) {
+
   return classes.filter(Boolean).join(' ')
+
 }
 
-//define login class
+//define dashboard navbar class
 export default class DashboardNavBar extends Component {
 
-  //administrator constructor
+  //dashboard navbar constructor
   constructor(props) {
 
     //allow access to props within constructor
@@ -39,17 +42,18 @@ export default class DashboardNavBar extends Component {
 
   }
 
+  //update active page on click
   onClick(name,e) {
 
-      this.setState({
+    this.setState({
 
-        activePage: name
+      activePage: name
 
-      })
+    })
 
   }
 
-  //render login component
+  //render dashboard navbar component
   render() {
 
     //handle redirect url
@@ -85,7 +89,6 @@ export default class DashboardNavBar extends Component {
                               to={item.href}
                               key={item.name}
                               className={classNames(
-
                                 item.name === this.state.activePage ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                                 'px-3 py-2 rounded-md text-sm font-medium focus:outline-none'
                               )}

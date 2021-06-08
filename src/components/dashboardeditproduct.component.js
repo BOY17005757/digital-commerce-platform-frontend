@@ -1,191 +1,188 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
-import { LockClosedIcon } from '@heroicons/react/solid';
-
-import ErrorAlert from "./erroralert.component";
-
 import {Link} from 'react-router-dom';
-
 import { Redirect } from "react-router-dom";
 
-//import service
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import component
+import ErrorAlert from "./erroralert.component";
+
+//import services
 import AuthenticationService from '../services/authentication.service';
 import ProductService from '../services/product.service';
 
-
-//define login class
+//define dashboard edit product class
 export default class DashboardEditProduct extends Component {
 
-    //register constructor
-  constructor(props) {
+    //dashboard edit product constructor
+    constructor(props) {
 
-    //allow access to props within constructor
-    super(props);
+        //allow access to props within constructor
+        super(props);
 
-    //assign default state
-    this.state = {
-        name: '',
-        description: '',
-        price: '',
-        status: true,
-        loading: false,
-        showErrorAlert: false,
-        message: '',
-        currentUser: AuthenticationService.getCurrentUser(),
-        redirect: null,
-        product: {},
-        urlProductId: ''
-    };
-
-  }
-
-  //invoked after component is mounted
-  componentDidMount() {
-
-    //call get users function
-    this.getProduct();
-
-}
-
-//get active product
-getProduct(productId) {
-
-    var self = this;
-
-    self.setState({
-        loading: true
-    });
-
-    let search = window.location.search;
-    let params = new URLSearchParams(search);
-    let productid = params.get('productId');
-
-    self.setState({
-
-        urlProductId: productid
-
-    });
-
-    if(productid === '' || productid === null) {
-
-        self.setState({
-            redirect: '/products'
-        })
+        //assign default state
+        this.state = {
+            name: '',
+            description: '',
+            price: '',
+            status: true,
+            loading: false,
+            showErrorAlert: false,
+            message: '',
+            currentUser: AuthenticationService.getCurrentUser(),
+            redirect: null,
+            product: {},
+            urlProductId: ''
+        };
 
     }
 
-    ProductService.getProduct(false,productid)
-    .then(function (product) {
+    //invoked after component is mounted
+    componentDidMount() {
+
+        //call get products function
+        this.getProduct();
+
+    }
+
+    //get product
+    getProduct() {
+
+        var self = this;
+
+        self.setState({
+            loading: true
+        });
+
+        let search = window.location.search;
+        let params = new URLSearchParams(search);
+        let productid = params.get('productId');
 
         self.setState({
 
-            product: product.data,
-            name: product.data.name,
-            description: product.data.description,
-            price: product.data.price,
-            status: product.data.status ===  true ? 'Active' : 'Disabled',
-            loading: false
+            urlProductId: productid
 
         });
 
-    })
-    .catch(function (error) {
-
-        self.setState({
-
-            message: "No product found.",
-            loading: false,
-            redirect: '/products'
-
-        });
-
-        console.error(error);
-
-    })
-
-}
-
-  //handle form entry
-  handleChange(event) {
-
-    this.setState({
-
-        [event.target.id]: event.target.value
-
-    });
-
-  }
-
-//form submit on register
-onSubmit(event) {
-
-    //prevent browser refresh after submit
-    event.preventDefault();
-
-    var self = this;
-
-    self.setState({
-
-        message: '',
-        loading: true
-
-    });
-
-    var boolStatus;
-
-    this.state.status === 'Active' ? boolStatus = true : boolStatus = false;
-
-    ProductService.editProduct(this.state.urlProductId,self.state.name, self.state.description, self.state.price, boolStatus)
-    .then(function (product) {
-
-        if (!product) {
+        if (productid === '' || productid === null) {
 
             self.setState({
-
-                showErrorAlert: true,
-                message: product.data.message
-
-            });
-
-        } else {
-
-            self.setState({
-
-                showErrorAlert: false,
-                redirect: '/dashboard/products'
-
-            });
+                redirect: '/products'
+            })
 
         }
 
-    })
-    .catch(function (error) {
+        ProductService.getProduct(false, productid)
+            .then(function (product) {
 
-        console.error(error);
+                self.setState({
 
-        self.setState({
+                    product: product.data,
+                    name: product.data.name,
+                    description: product.data.description,
+                    price: product.data.price,
+                    status: product.data.status === true ? 'Active' : 'Disabled',
+                    loading: false
 
-            showErrorAlert: true
+                });
+
+            })
+            .catch(function (error) {
+
+                self.setState({
+
+                    message: "No product found.",
+                    loading: false,
+                    redirect: '/products'
+
+                });
+
+                console.error(error);
+
+            })
+
+    }
+
+    //handle form entry
+    handleChange(event) {
+
+        this.setState({
+
+            [event.target.id]: event.target.value
 
         });
 
-    })
-    .finally(function () {
+    }
+
+    //form submit on edit product
+    onSubmit(event) {
+
+        //prevent browser refresh after submit
+        event.preventDefault();
+
+        var self = this;
 
         self.setState({
 
-            loading: false
+            message: '',
+            loading: true
 
         });
 
-    });
+        var boolStatus;
 
-  }
+        self.state.status === 'Active' ? boolStatus = true : boolStatus = false;
 
-  //render login component
+        ProductService.editProduct(self.state.urlProductId, self.state.name, self.state.description, self.state.price, boolStatus)
+            .then(function (product) {
+
+                if (!product) {
+
+                    self.setState({
+
+                        showErrorAlert: true,
+                        message: product.data.message
+
+                    });
+
+                } else {
+
+                    self.setState({
+
+                        showErrorAlert: false,
+                        redirect: '/dashboard/products'
+
+                    });
+
+                }
+
+            })
+            .catch(function (error) {
+
+                console.error(error);
+
+                self.setState({
+
+                    showErrorAlert: true
+
+                });
+
+            })
+            .finally(function () {
+
+                self.setState({
+
+                    loading: false
+
+                });
+
+            });
+
+    }
+
+  //render dashboard edit product component
   render() {
 
     //handle redirect url
@@ -202,7 +199,6 @@ onSubmit(event) {
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Edit Product</h2>
                 </div>
-
                 <form onSubmit={this.onSubmit.bind(this)} className="mt-8 space-y-6">
                     <input type="hidden" name="remember" defaultValue="true" />
                     <div className="rounded-md shadow-sm -space-y-px">

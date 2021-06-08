@@ -1,27 +1,20 @@
 //import packages
-import React, { Component, useState } from 'react';
-
-import "../styles/tailwind.generated.css";
-
-import { LockClosedIcon } from '@heroicons/react/solid';
-
-import ErrorAlert from "./erroralert.component";
-
+import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-
 import { Redirect } from "react-router-dom";
-
 import DateTimePicker from 'react-datetime-picker';
 
-//import service
+//import styles
+import "../styles/tailwind.generated.css";
+
+//import services
 import AuthenticationService from '../services/authentication.service';
-import ProductService from '../services/product.service';
 import CollectionService from '../services/collection.service';
 
-//define login class
+//define dashboard create collection class
 export default class DashboardCreateCollection extends Component {
 
-    //register constructor
+    //dashboard create collection constructor
     constructor(props) {
 
         //allow access to props within constructor
@@ -43,8 +36,6 @@ export default class DashboardCreateCollection extends Component {
 
     handleDateTimeFrom(value) {
 
-        console.log(value)
-
         this.setState({
             dateTimeFrom: value
         })
@@ -59,7 +50,7 @@ export default class DashboardCreateCollection extends Component {
 
     }
 
-    //form submit on register
+    //form submit on create collection
     onSubmit(event) {
 
         //prevent browser refresh after submit
@@ -121,7 +112,7 @@ export default class DashboardCreateCollection extends Component {
 
     }
 
-  //render login component
+  //render dashboard create collection component
   render() {
 
     //handle redirect url
@@ -138,11 +129,9 @@ export default class DashboardCreateCollection extends Component {
                 <div>
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create Collection</h2>
                 </div>
-
                 <form onSubmit={this.onSubmit.bind(this)} className="mt-8">
                     <input type="hidden" name="remember" defaultValue="true" />
                     <div className="rounded-md shadow-sm">
-
                     <p className="leading-relaxed font-bold">Date & Time From</p>
                     <div>
                     <DateTimePicker
@@ -157,7 +146,6 @@ export default class DashboardCreateCollection extends Component {
                         clockClassName="z-40"
                     />
                     </div>
-
                     <div>
                     <p className="leading-relaxed font-bold">Date & Time To</p>
                     <DateTimePicker

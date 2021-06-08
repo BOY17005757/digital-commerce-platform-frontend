@@ -19,7 +19,7 @@ class CollectionService {
 
     }
 
-    //api call (POST) new collection, validate access token via header, and pass userid/content via body
+    //api call (POST) new collection, validate access token via header, and pass content via body
     createCollection(datetimefrom,datetimeto) {
 
         return axios({
@@ -45,7 +45,7 @@ class CollectionService {
                 });
     }
 
-     //api call (DELETE) collection, pass userid parameter, and validate access token via header
+     //api call (DELETE) collection, pass collectionid parameter, and validate access token via header
      removeCollection(collectionId) {
 
         return axios.delete(API_URL + 'delete/?collectionId=' + collectionId, {

@@ -1,18 +1,16 @@
 //import packages
 import React, { Component } from 'react';
-
-import "../styles/tailwind.generated.css";
-
 import {Link} from 'react-router-dom';
-
 import { Helmet } from "react-helmet";
 
-//define login class
+//import styles
+import "../styles/tailwind.generated.css";
+
+//define home class
 export default class Home extends Component {
 
-  //render login component
+  //render home component
   render() {
-
     return (
         <div>
         <Helmet>
@@ -68,7 +66,7 @@ export default class Home extends Component {
           />
         </div>
       </div>
-        </div>
+      </div>
     );
 
   }

@@ -1,11 +1,12 @@
 export default function authenticationHeader() {
 
-  //get user from browser local storage
+  //get current user from browser local storage
   const user = JSON.parse(localStorage.getItem('user'));
 
-  //check user populated
+  //check if user populated
   if(user && user.accessToken) {
 
+    //return prepared header access token
     return { 'x-access-token': user.accessToken };
 
   } else {

@@ -18,7 +18,7 @@ class ManifestService {
 
     }
 
-    //api call (POST) create order, validate access token via header, and pass userid/content via body
+    //api call (POST) edit manifest, validate access token via header, and pass content via body
     editManifest(content) {
 
         return axios({

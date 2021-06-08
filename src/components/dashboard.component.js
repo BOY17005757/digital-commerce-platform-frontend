@@ -1,21 +1,18 @@
 //import packages
 import React, { Component } from 'react';
-
-import WelcomeBanner from "./welcomebanner.component";
-
-import "../styles/tailwind.generated.css";
-
 import { Helmet } from "react-helmet";
-
 import { Redirect } from "react-router-dom";
 
-import DashboardNavBar from "./dashboardnavbar.component";
+//import styles
+import "../styles/tailwind.generated.css";
 
+//import components
+import WelcomeBanner from "./welcomebanner.component";
+import DashboardNavBar from "./dashboardnavbar.component";
 import DashboardUsers from "./dashboardusers.component";
 import DashboardProducts from "./dashboardproducts.component";
 import DashboardOrders from "./dashboardorders.component";
 import DashboardCollections from "./dashboardcollections.component";
-
 import DashboardCreateUser from "./dashboardcreateuser.component";
 import DashboardCreateProduct from "./dashboardcreateproduct.component";
 import DashboardEditProduct from "./dashboardeditproduct.component";
@@ -28,10 +25,10 @@ import DashboardContact from "./dashboardcontact.component";
 //import services
 import AuthenticationService from '../services/authentication.service';
 
-//define login class
+//define dashboard class
 export default class Dashboard extends Component {
 
-  //administrator constructor
+  //dashboard constructor
   constructor(props) {
 
     //allow access to props within constructor
@@ -40,8 +37,8 @@ export default class Dashboard extends Component {
     //assign default state
     this.state = {
 
-        currentUser: AuthenticationService.getCurrentUser(),
-        redirect: null
+      currentUser: AuthenticationService.getCurrentUser(),
+      redirect: null
 
     };
 
@@ -62,6 +59,7 @@ export default class Dashboard extends Component {
 
   }
 
+  //render the relevant dashboard components based on url
   renderManagement() {
 
     var pathName = this.props.history.location.pathname;
@@ -110,7 +108,7 @@ export default class Dashboard extends Component {
 
   }
 
-  //render login component
+  //render dashboard component
   render() {
 
     //handle redirect url
@@ -123,20 +121,14 @@ export default class Dashboard extends Component {
     return (
         <div>
           <Helmet>
-                <title>{`${this.props.manifest.name}`} | Dashboard</title>
-            </Helmet>
-            <WelcomeBanner username={this.props.username} />
-
-            <div className="relative bg-gray-200 overflow-hidden min-h-screen">
-
-              <DashboardNavBar />
-
-              {this.renderManagement()}
-
-            </div>
-
+            <title>{`${this.props.manifest.name}`} | Dashboard</title>
+          </Helmet>
+          <WelcomeBanner username={this.props.username} />
+          <div className="relative bg-gray-200 overflow-hidden min-h-screen">
+            <DashboardNavBar />
+            {this.renderManagement()}
+          </div>
         </div>
-            
     );
 
   }
